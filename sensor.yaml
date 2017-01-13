@@ -1,5 +1,5 @@
 - platform: darksky
-  api_key: 6d1de946bb62b3021dd9e368777ce8c6
+  api_key: !secret darksky_key
   forecast:
   - 1
   monitored_conditions:

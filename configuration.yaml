@@ -23,7 +23,7 @@ frontend:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret http_password
+#  api_password: !secret http_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
 #  base_url: !secret http_url
