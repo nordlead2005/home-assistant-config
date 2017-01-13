@@ -1,0 +1,56 @@
+- platform: darksky
+  api_key: 6d1de946bb62b3021dd9e368777ce8c6
+  forecast:
+  - 1
+  monitored_conditions:
+  - temperature
+  - wind_speed
+  - temperature_max
+  - temperature_min
+
+- platform: command_line
+  name: UPS Battery
+  command: 'sudo pwrstat -status | grep Battery | grep -o "[0-9]\{1,3\}"'
+  unit_of_measurement: "%"
+  
+- platform: template
+  sensors:
+    family_room:
+      entity_id:
+      - remote.familyroom
+      value_template: >-
+        {% if states.remote.familyroom != None %}
+          {{ states.remote.familyroom.attributes.current_activity }}
+        {% else %}
+          NA
+        {% endif %}
+
+    indoor_temperature:
+      friendly_name: Indoor Temperature
+      entity_id:
+      - climate.bigbee
+      unit_of_measurement: 'F'
+      value_template: >-
+        {% if states.climate.bigbee != None %}
+          {{ states.climate.bigbee.attributes.current_temperature }}
+        {% else %}
+          NA
+        {% endif %}
+        
+    tomorrows_forecast:
+      friendly_name: Tomorrow
+      entity_id:
+      - sensor.dark_sky_daily_high_temperature_1
+      - sensor.dark_sky_daily_low_temperaure_1
+      value_template: >
+        {{states.sensor.dark_sky_daily_low_temperature_1.state}} - {{states.sensor.dark_sky_daily_high_temperature_1.state}} {{states.sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}
+
+    ecobee_operation_mode:
+      entity_id:
+      - climate.bigbee
+      value_template: >-
+        {% if states.climate.bigbee != None %}
+          {{ states.climate.bigbee.attributes.operation_mode }}
+        {% else %}
+          NA
+        {% endif %}

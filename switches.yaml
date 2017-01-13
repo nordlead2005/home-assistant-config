@@ -1,0 +1,24 @@
+- platform: wake_on_lan
+  name: Desktop
+  mac_address: "00:25:22:F8:BB:5E"
+  host: 192.168.125.115
+- platform: wake_on_lan
+  name: HTPC
+  mac_address: "E0:CB:4E:26:E2:69"
+  host: 192.168.125.103
+- platform: template
+  switches:
+    ecobee_away_mode:
+      value_template: >-
+        {% if states.climate.bigbee != none %}
+          {{ is_state_attr('climate.bigbee', 'away_mode', 'on') }}
+        {% else %}
+          off
+        {% endif %}
+        
+      turn_on:
+        service: script.turn_on
+        entity_id: script.ecobee_set_away_mode
+      turn_off:
+        service: script.turn_on
+        entity_id: script.ecobee_clear_away_mode

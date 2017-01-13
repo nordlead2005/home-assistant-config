@@ -1,0 +1,18 @@
+familyroomharmony:
+  name: Harmony Activity
+  options:
+   - PowerOff
+   - Watch PC
+   - Play Wii
+   - Play PS3
+   - Netflix pc
+   - ANTENNA TV
+  icon: mdi:television-guide
+ecobee:
+  name: Operation Mode
+  options:
+   - auto
+   - heat
+   - cool
+   - 'off'
+  icon: mdi:air-conditioner

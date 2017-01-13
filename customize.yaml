@@ -1,0 +1,64 @@
+climate.bigbee:
+  friendly_name: Ecobee
+  entity_picture: http://cdn.shopify.com/s/files/1/0299/5789/products/ecobee-3-img-1-us_2x_64796d15-61db-4087-876b-860f0449e80b_grande.png
+
+device_tracker.sethsphone:
+  icon: mdi:cellphone-android
+  friendly_name: "Seth"
+device_tracker.christysphone:
+  icon: mdi:cellphone-android
+  friendly_name: "Christy"
+
+group.all_automations:
+  hidden: false
+group.all_devices:
+  hidden: false
+group.all_remotes:
+  hidden: false
+group.all_scripts:
+  hidden: false
+group.all_switches:
+  hidden: false
+group.family_room:
+  friendly_name: "Family Room"
+
+script.front_porch_timer:
+  icon: mdi:timer
+script.fix_harmony:
+  icon: mdi:help
+
+sensor.dark_sky_temperature:
+  friendly_name: 'Outside Temperature'
+sensor.dark_sky_wind_speed:
+  friendly_name: "Wind Speed"
+sensor.indoor_temperature:
+  icon: mdi:thermometer
+sensor.tomorrows_forecast:
+  icon: mdi:thermometer
+sensor.family_room:
+  friendly_name: 'Harmony Activity'
+  entity_picture: https://assets.logitech.com/assets/64814/9/harmony-hub-home-automation-control-hub-and-app.png
+sensor.house_occupancy:
+  icon: mdi:home-variant
+sensor.ups_battery:
+  friendly_name: "UPS Battery"
+  icon: mdi:battery
+
+switch.ecobee_away_mode:
+  icon: mdi:run
+  friendly_name: "Away Mode"
+switch.htpc:
+  icon: mdi:desktop-tower
+switch.desktop:
+  icon: mdi:desktop-tower
+switch.front_porch:
+  icon: mdi:lightbulb
+
+switch.wemo_switch_1:
+  icon: mdi:lightbulb
+  friendly_name: Front Light
+#  icon: mdi:pine-tree
+#  friendly_name: Christmas Tree
+switch.wemo_switch_2:
+  icon: mdi:home-outline
+  friendly_name: Outside Lights

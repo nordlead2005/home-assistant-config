@@ -1,0 +1,315 @@
+########################################################
+################ COMING AND GOING ######################
+########################################################
+- alias: Christy Got Home While Seth Away
+  hide_entity: false
+  condition:
+    - condition: state
+      entity_id: device_tracker.sethsphone
+      state: 'not_home'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.christysphone
+      from: 'not_home'
+      to: 'home'
+  action:
+  - delay: '00:01:00'
+  - condition: state
+    entity_id: device_tracker.sethsphone
+    state: 'not_home'      
+  - service: notify.html5
+    data:
+      target: "seths_one_plus_3t"
+      message: "Christy is now home."
+      data:
+        tag: "christy_is_home"
+
+- alias: Seth left work
+  hide_entity: false
+  condition:
+    - condition: time
+      after: '15:30:00'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  trigger: 
+    platform: state
+    entity_id: device_tracker.sethsphone
+    from: "work"
+    to: "not_home"
+  action:
+    service: notify.html5
+    data:
+      target: "christys_lg_g2"
+      message: "Seth Left Work."
+      data:
+        tag: "seth_left_work"
+      
+- alias: Someone Got Home, turn on the lights
+  hide_entity: true
+  condition:
+    - condition: sun
+      after: sunset
+    - condition: state
+      entity_id: switch.front_porch
+      state: "off"
+  trigger:
+    - platform: state
+      entity_id: device_tracker.sethsphone
+      from: 'not_home'
+      to: 'home'
+    - platform: state
+      entity_id: device_tracker.christysphone
+      from: 'not_home'
+      to: 'home'
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_front_porch
+
+- alias: Someone left, turn off the porch light
+  hide_entity: true
+  condition:
+  - condition: state
+    entity_id: switch.front_porch
+    state: "on"
+  - condition: template
+    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.switch.front_porch.last_changed)) < 900 }}'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.sethsphone
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: device_tracker.christysphone
+      from: 'home'
+      to: 'not_home'
+  action:
+    service: homeassistant.turn_off
+    entity_id: switch.front_porch
+    
+- alias: Shut Off All
+#  condition: unknown at this time, just trigger at night and when all adults leave
+  trigger:
+  - platform: time
+    hours: 00
+    minutes: 30
+    seconds: 00
+  - platform: state
+    entity_id: group.all_devices
+    to: 'not_home'
+  action:
+  - service: homeassistant.turn_on
+    entity_id: script.turn_off_all
+    
+############
+- alias: Family Room Occupied
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+    - condition: state
+      entity_id: sensor.family_room
+      state: "PowerOff"
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bigbee_occupancy
+    state: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.wemo_switch_1
+- alias: Family Room Empty
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bigbee_occupancy
+    state: 'off'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: switch.wemo_switch_1
+
+
+########################################################
+################  NOTIFICATIONS  #######################
+########################################################
+- alias: Front Porch Left On
+  trigger:
+  - platform: state
+    entity_id: switch.front_porch
+    to: "on"
+    for: 00:30:00
+  action:
+  - service: notify.html5
+    data:
+      target:
+      - "seths_one_plus_3t"
+      - "christys_lg_g2"
+      message: "The Front Porch was left on for 30 minutes"
+      data:
+        tag: "front_portch_left_on"
+        actions:
+        - action: "turn_off_front_porch"
+          title: Turn Off
+          
+- alias: Front Porch Turn Off Notification Clicked
+  trigger:
+  - platform: event
+    event_type: html5_notification.clicked
+    event_data:
+      action: turn_off_front_porch
+  action:
+  - service: homeassistant.turn_off
+    entity_id: switch.front_porch
+
+- alias: Power Event Occured
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.ups_battery
+    below: 100
+  action:
+  - service: notify.html5
+    data:
+      target: "seths_one_plus_3t"
+      message: "Power Event Occured"
+      
+
+########################################################
+################ ECOBEE/CLIMATE  #######################
+########################################################
+
+- alias: Set Input Select ecobee mode changes
+  trigger:
+  - platform: state
+    entity_id: sensor.ecobee_operation_mode
+  action:
+    service: input_select.select_option
+    data_template:
+      entity_id: input_select.ecobee
+      option: >
+        {{ states.sensor.ecobee_operation_mode.state }}
+
+- alias: Set Ecobee mode from input_select
+  trigger:
+    platform: state
+    entity_id: input_select.ecobee
+  action:
+  - service: climate.set_operation_mode
+    data_template:
+      entity_id: climate.bigbee
+      operation_mode: "{{trigger.to_state.state}}"
+
+- alias: Hot Tomorrow
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.dark_sky_daily_high_temperature_1
+    above: 87.5
+  trigger:
+  - platform: time
+    after: '22:00:00'
+  action:
+    service: notify.html5
+    data_template:
+      message: "High tomorrow is {{states('sensor.dark_sky_daily_high_temperature_1')}}{{sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}."
+    data:
+      tag: "hot_tomorrow"
+      actions:
+      - action: turn_on_ac
+        title: Turn On A/C
+
+########################################################
+################ HARMONY REMOTE  #######################
+########################################################
+
+- alias: Set Input Select when Harmony Changes
+  trigger:
+  - platform: state
+    entity_id: sensor.family_room
+  - platform: event
+    event_type: homeassistant_start  
+  action:
+  - service: input_select.select_option
+    data_template:
+      entity_id: input_select.familyroomharmony
+      option: >
+        {{ states.sensor.family_room.state }}      
+
+- alias: Start Harmony Acitivity from input_select
+  trigger:
+    platform: state
+    entity_id: input_select.familyroomharmony
+  action:
+  - service: remote.turn_on
+    data_template:
+      entity_id: remote.familyroom
+      activity: "{{trigger.to_state.state}}"
+#  - delay: "00:00:01"
+  - service: remote.harmony_sync
+    entity_id: remote.familyroom
+
+- alias: Start PC when Watch PC selected
+  trigger:
+  - platform: state
+    entity_id: input_select.familyroomharmony
+    state: "Watch PC"
+  - platform: state
+    entity_id: sensor.family_room
+    state: "Watch PC"
+  action:
+  - service: homeassistant.turn_on
+    entity_id: switch.htpc
+
+########################################################
+################ CHRISTMAS LIGHTS ######################
+########################################################
+
+- alias: Turn on Christmas Outside Lights at sunrise
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: "-01:00:00"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.wemo_switch_2
+- alias: Turn off Christmas Outside Lights at Morning
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: "+00:20:00"
+  action:
+    - service: homeassistant.turn_off
+      entity_id: switch.wemo_switch_2
+#- alias: Turn on Christmas Tree Lights at Morning
+#  trigger:
+#    platform: time
+#    after: '07:30:00'
+#  action:
+#    - service: homeassistant.turn_on
+#      entity_id: switch.wemo_switch_1
+#- alias: Turn off Christmas Tree Lights at Morning
+#  trigger:
+#    platform: time
+#    after: '09:30:00'
+#  action:
+#    - service: homeassistant.turn_off
+#      entity_id: switch.wemo_switch_1
+- alias: Turn on Christmas Lights at Sunset
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:30:00"
+  action:
+#    - service: homeassistant.turn_on
+#      entity_id: switch.wemo_switch_1
+    - service: homeassistant.turn_on
+      entity_id: switch.wemo_switch_2
+- alias: Turn off Christmas Lights at Night
+  hide_entity: true
+  trigger:
+    platform: time
+    after: '23:00:00'
+  action:
+#    - service: homeassistant.turn_off
+#      entity_id: switch.wemo_switch_1
+    - service: homeassistant.turn_off
+      entity_id: switch.wemo_switch_2

@@ -1,0 +1,65 @@
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+  - binary_sensor.home_occupancy
+  - device_tracker.sethsphone
+  - device_tracker.christysphone
+  - device_tracker.lydiaabesiphone
+  - device_tracker.cindysphone
+  - sensor.ups_battery
+  - group.christmas
+  - group.climate
+  - group.computers
+  - group.family_room
+  - group.outside
+
+family_room:
+  view: no
+  icon: mdi:television-guide
+  control: hidden
+  entities:
+  - switch.wemo_switch_1
+  - input_select.familyroomharmony
+  - switch.htpc
+  - script.fix_harmony
+
+outside: switch.front_porch, script.front_porch_timer, script.timed_front_porch
+
+climate:
+  view: no
+  icon: mdi:thermometer
+  control: hidden
+  entities:
+  - sensor.indoor_temperature
+  - sensor.dark_sky_temperature
+  - sensor.dark_sky_wind_speed
+  - sensor.tomorrows_forecast
+  - input_select.ecobee
+  - switch.ecobee_away_mode
+  - climate.bigbee
+  - script.ecobee_resume_program
+  
+christmas:
+  view: no
+  icon: mdi:pine-tree
+  entities:
+#  - switch.wemo_switch_1
+  - switch.wemo_switch_2
+
+computers:
+  view: no
+  icon: mdi:computer-tower
+  entities:
+  - switch.htpc
+  - switch.desktop
+
+Settings:
+  view: yes
+  icon: mdi:settings
+  entities:
+  - group.all_automations
+  - group.all_devices
+  - group.all_remotes
+  - group.all_scripts
+  - group.all_switches

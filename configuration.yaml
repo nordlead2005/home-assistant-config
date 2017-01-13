@@ -1,0 +1,138 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 211
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/New_York
+  
+  customize: !include customize.yaml
+  
+#logger:
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+#  base_url: !secret http_url
+#  ssl_certificate: !secret certificate
+#  ssl_key: !secret key
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+device_tracker:
+  - platform: ddwrt
+    host: 192.168.125.1
+    username: !secret ddwrt_username
+    password: !secret ddwrt_password
+    track_new_devices: false
+  - platform: ddwrt
+    host: 192.168.125.4
+    username: !secret ddwrt_username
+    password: !secret ddwrt_password
+    track_new_devices: false
+    
+
+# Track the sun
+sun:
+
+ecobee:
+  api_key: !secret ecobee_key
+
+climate:
+  platform: ecobee
+
+wemo:
+  static:
+    - 192.168.125.20 #Plug-in Switch 1
+    - 192.168.125.21 #Plug-in Switch 2
+    - 192.168.125.22 #Front Porch
+#    - 192.168.125.23 #Kitchen Table or Garage?
+
+remote:
+  - platform: harmony
+    name: FamilyRoom
+    host: 192.168.125.130
+
+media_player:
+  - platform: cast
+    
+ifttt:
+  key: !secret ifttt_key
+
+# Text to speech
+tts:
+  platform: google
+
+binary_sensor: !include binary_sensor.yaml
+group: !include groups.yaml
+input_select: !include input_select.yaml
+notify: !include notify.yaml
+sensor: !include sensor.yaml
+switch: !include switches.yaml
+
+automation: !include automation.yaml
+#scene: !include scenes.yaml
+script: !include script.yaml
+
+zone:
+  name: home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  radius: 100
+  icon: mdi:home-variant
+
+zone 2:
+  name: work
+  latitude: !secret work_latitude
+  longitude: !secret work_longitude
+  radius: 500
+  icon: mdi:factory
+
+zone 3:
+  name: church
+  latitude: !secret church_latitude
+  longitude: !secret church_longitude
+  radius: 200
+  icon: mdi:church
+
+zone 4:
+  name: parentsHouse
+  latitude: !secret parents_latitude
+  longitude: !secret parents_longitude
+  radius: 200
+  icon: mdi:home
+
+zone 5:
+  name: inLawsHouse
+  latitude: !secret inlaws_latitude
+  longitude: !secret inlaws_longitude
+  radius: 200
+  icon: mdi:home

@@ -1,0 +1,126 @@
+timed_front_porch:
+  alias: "Turn on front porch and set timer"
+  sequence:
+    - service: script.turn_off
+      data:
+        entity_id: script.front_porch_timer
+    - service: switch.turn_on
+      data:
+        entity_id: switch.front_porch
+    - service: script.turn_on
+      data:
+        entity_id: script.front_porch_timer
+front_porch_timer:
+  alias: "Turn off front porch after 7 minute"
+  sequence:
+    - delay:
+        minutes: 7
+    - service: switch.turn_off
+      data:
+        entity_id: switch.front_porch
+
+ecobee_set_away_mode:
+  alias: Set away mode on the ecobee
+  sequence:
+    - service: climate.set_away_mode
+      data:
+        entity_id: climate.bigbee
+        away_mode: on
+ecobee_clear_away_mode:
+  alias: Set home mode on the ecobee
+  sequence:
+    - service: climate.set_away_mode
+      data:
+        entity_id: climate.bigbee
+        away_mode: false
+ecobee_resume_program:
+  alias: Resume Program
+  sequence:
+  - service: ifttt.trigger
+    data: {"event":"HA_ResumeEcobee", "value1":"NA"}
+
+###############################################################################
+########################     FIX HARMONY ACTIVITY     #########################
+###############################################################################
+fix_harmony:
+  alias: Fix Activity
+  sequence:
+  - service: script.turn_on
+    entity_id: script.fix_power_off
+  - service: script.turn_on
+    entity_id: script.fix_watch_pc
+  
+fix_power_off:
+  sequence:
+  - condition: state
+    entity_id: sensor.family_room
+    state: "PowerOff"
+  - service: remote.send_command
+  #Yamaha AV Receiver
+    data:
+      entity_id: remote.familyroom
+      command: "PowerStandby-All"
+      device: 25493294
+  - service: remote.send_command
+  #HTPC
+    data:
+      entity_id: remote.familyroom
+      command: "Ctrl+Alt+1"
+      device: 25493315
+  - service: remote.send_command
+  #VIZIO TV
+    data:
+      entity_id: remote.familyroom
+      command: "PowerOff"
+      device: 25493252
+fix_watch_pc:
+  alias: Fix Watch PC
+  sequence:
+  - condition: state
+    entity_id: sensor.family_room
+    state: "Watch PC"
+  - service: remote.send_command
+  #Yamaha AV Receiver Power On
+    data:
+      entity_id: remote.familyroom
+      command: "PowerOn-All"
+      device: 25493294
+  - delay: 00:00:01
+  - service: remote.send_command
+  #VIZIO TV, Power
+    data:
+      entity_id: remote.familyroom
+      command: "PowerOn"
+      device: 25493252
+  - delay: 00:00:01
+  - service: remote.send_command
+  #Yamaha AV Receiver, set Input
+    data:
+      entity_id: remote.familyroom
+      command: "InputDVD"
+      device: 25493294
+  - delay: 00:00:01
+  - service: switch.turn_on
+    entity_id: switch.htpc
+  - delay: 00:00:05
+  - service: remote.send_command
+  #VIZIO TV, HDMI1
+    data:
+      entity_id: remote.familyroom
+      command: "InputHdmi1"
+      device: 25493252
+    
+turn_off_all:
+  alias: Everyone left the house, shut everything off
+  sequence:
+    - service: remote.turn_on
+      data:
+        entity_id: remote.familyroom
+        activity: "PowerOff"
+    - delay: 00:00:15
+    - service: script.turn_on
+      entity_id: script.fix_power_off
+    - service: switch.turn_off
+      entity_id: switch.wemo_switch_1
+    - service: switch.turn_off
+      entity_id: switch.front_porch
