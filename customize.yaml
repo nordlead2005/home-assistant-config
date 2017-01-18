@@ -21,6 +21,8 @@ group.all_switches:
   hidden: false
 group.family_room:
   friendly_name: "Family Room"
+group.living_room:
+  friendly_name: "Living Room"
 
 script.front_porch_timer:
   icon: mdi:timer
@@ -53,6 +55,8 @@ switch.desktop:
   icon: mdi:desktop-tower
 switch.front_porch:
   icon: mdi:lightbulb
+switch.kitchen_table:
+  icon: mdi:lightbulb
 
 switch.wemo_switch_1:
   icon: mdi:lightbulb
@@ -60,5 +64,5 @@ switch.wemo_switch_1:
 #  icon: mdi:pine-tree
 #  friendly_name: Christmas Tree
 switch.wemo_switch_2:
-  icon: mdi:home-outline
-  friendly_name: Outside Lights
+  icon: mdi:lightbulb
+  friendly_name: Piano Light

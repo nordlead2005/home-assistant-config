@@ -8,11 +8,14 @@ default_view:
   - device_tracker.lydiaabesiphone
   - device_tracker.cindysphone
   - sensor.ups_battery
-  - group.christmas
+#  - group.christmas
   - group.climate
   - group.computers
   - group.family_room
+  - group.kitchen
+  - group.living_room
   - group.outside
+  - updater.updater
 
 family_room:
   view: no
@@ -23,6 +26,18 @@ family_room:
   - input_select.familyroomharmony
   - switch.htpc
   - script.fix_harmony
+
+kitchen:
+  view: no
+  control: hidden
+  entities:
+  - switch.kitchen_table
+
+living_room:
+  view: no
+  control: hidden
+  entities:
+  - switch.wemo_switch_2
 
 outside: switch.front_porch, script.front_porch_timer, script.timed_front_porch
 
@@ -45,7 +60,7 @@ christmas:
   icon: mdi:pine-tree
   entities:
 #  - switch.wemo_switch_1
-  - switch.wemo_switch_2
+#  - switch.wemo_switch_2
 
 computers:
   view: no

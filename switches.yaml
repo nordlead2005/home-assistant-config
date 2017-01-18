@@ -2,10 +2,14 @@
   name: Desktop
   mac_address: "00:25:22:F8:BB:5E"
   host: 192.168.125.115
+  turn_off:
+    service: shell_command.shutdown_desktop
 - platform: wake_on_lan
   name: HTPC
   mac_address: "E0:CB:4E:26:E2:69"
   host: 192.168.125.103
+  turn_off:
+    service: shell_command.shutdown_htpc
 - platform: template
   switches:
     ecobee_away_mode:

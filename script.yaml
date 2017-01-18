@@ -123,4 +123,8 @@ turn_off_all:
     - service: switch.turn_off
       entity_id: switch.wemo_switch_1
     - service: switch.turn_off
+      entity_id: switch.wemo_switch_2
+    - service: switch.turn_off
       entity_id: switch.front_porch
+    - service: switch.turn_off
+      entity_id: switch.kitchen_table

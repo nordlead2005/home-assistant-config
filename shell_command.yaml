@@ -1,0 +1,2 @@
+shutdown_desktop: !secret shutdown_desktop
+shutdown_htpc: !secret shutdown_htpc

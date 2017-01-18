@@ -29,14 +29,14 @@ http:
 #  base_url: !secret http_url
 #  ssl_certificate: !secret certificate
 #  ssl_key: !secret key
-  ip_ban_enabled: True
-  login_attempts_threshold: 5
+  #ip_ban_enabled: True
+  #login_attempts_threshold: 5
 
 # Checks for available updates
 updater:
 
 # Discover some devices automatically
-discovery:
+#discovery:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -65,6 +65,7 @@ sun:
 
 ecobee:
   api_key: !secret ecobee_key
+  hold_temp: true
 
 climate:
   platform: ecobee
@@ -74,7 +75,7 @@ wemo:
     - 192.168.125.20 #Plug-in Switch 1
     - 192.168.125.21 #Plug-in Switch 2
     - 192.168.125.22 #Front Porch
-#    - 192.168.125.23 #Kitchen Table or Garage?
+    - 192.168.125.23 #Kitchen Table
 
 remote:
   - platform: harmony
@@ -97,42 +98,43 @@ input_select: !include input_select.yaml
 notify: !include notify.yaml
 sensor: !include sensor.yaml
 switch: !include switches.yaml
+shell_command: !include shell_command.yaml
 
 automation: !include automation.yaml
 #scene: !include scenes.yaml
 script: !include script.yaml
 
-zone:
-  name: home
-  latitude: !secret home_latitude
-  longitude: !secret home_longitude
-  radius: 100
-  icon: mdi:home-variant
-
-zone 2:
-  name: work
-  latitude: !secret work_latitude
-  longitude: !secret work_longitude
-  radius: 500
-  icon: mdi:factory
-
-zone 3:
-  name: church
-  latitude: !secret church_latitude
-  longitude: !secret church_longitude
-  radius: 200
-  icon: mdi:church
-
-zone 4:
-  name: parentsHouse
-  latitude: !secret parents_latitude
-  longitude: !secret parents_longitude
-  radius: 200
-  icon: mdi:home
-
-zone 5:
-  name: inLawsHouse
-  latitude: !secret inlaws_latitude
-  longitude: !secret inlaws_longitude
-  radius: 200
-  icon: mdi:home
+#zone:
+#  name: home
+#  latitude: !secret home_latitude
+#  longitude: !secret home_longitude
+#  radius: 100
+#  icon: mdi:home-variant
+#
+#zone 2:
+#  name: work
+#  latitude: !secret work_latitude
+#  longitude: !secret work_longitude
+#  radius: 500
+#  icon: mdi:factory
+#
+#zone 3:
+#  name: church
+#  latitude: !secret church_latitude
+#  longitude: !secret church_longitude
+#  radius: 200
+#  icon: mdi:church
+#
+#zone 4:
+#  name: parentsHouse
+#  latitude: !secret parents_latitude
+#  longitude: !secret parents_longitude
+#  radius: 200
+#  icon: mdi:home
+#
+#zone 5:
+#  name: inLawsHouse
+#  latitude: !secret inlaws_latitude
+#  longitude: !secret inlaws_longitude
+#  radius: 200
+#  icon: mdi:home
