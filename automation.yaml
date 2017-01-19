@@ -267,7 +267,11 @@
   - platform: time
     after: '07:30:00'
   action:
-    service: notify.html5
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.ecobee
+      option: "off"
+  - service: notify.html5
     data_template:
       message: "High today is {{states('sensor.dark_sky_daily_high_temperature')}}{{sensor.dark_sky_daily_high_temperature.attributes.unit_of_measurement}}, turning off heat"
     data:
@@ -275,7 +279,7 @@
       mode: "heat"
       actions:
       - action: change_ecobee_operation_mode
-        title: "Turn A/C back on"
+        title: "Turn heat back on"
    
 - alias: Cold Tomorrow
   condition:
@@ -333,7 +337,11 @@
   - platform: time
     after: '07:30:00'
   action:
-    service: notify.html5
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.ecobee
+      option: "off"
+  - service: notify.html5
     data_template:
       message: "High today is {{states('sensor.dark_sky_daily_high_temperature')}}{{sensor.dark_sky_daily_high_temperature.attributes.unit_of_measurement}}, turning off A/C"
     data:
