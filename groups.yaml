@@ -17,31 +17,36 @@ default_view:
   - group.outside
   - updater.updater
 
-family_room:
+Family Room:
   view: no
   icon: mdi:television-guide
   control: hidden
   entities:
   - switch.wemo_switch_1
-  - input_select.familyroomharmony
+  - input_select.harmony_activity
   - switch.htpc
   - script.fix_harmony
 
-kitchen:
+Kitchen:
   view: no
   control: hidden
   entities:
   - switch.kitchen_table
 
-living_room:
+Living Room:
   view: no
   control: hidden
   entities:
   - switch.wemo_switch_2
 
-outside: switch.front_porch, script.front_porch_timer, script.timed_front_porch
+Outside:
+  view: no
+  entities:
+  - switch.front_porch
+  - script.front_porch_timer
+  - script.timed_front_porch
 
-climate:
+Climate:
   view: no
   icon: mdi:thermometer
   control: hidden
@@ -55,14 +60,14 @@ climate:
   - climate.bigbee
   - script.ecobee_resume_program
   
-christmas:
+Christmas:
   view: no
   icon: mdi:pine-tree
   entities:
 #  - switch.wemo_switch_1
 #  - switch.wemo_switch_2
 
-computers:
+Computers:
   view: no
   icon: mdi:computer-tower
   entities:

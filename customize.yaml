@@ -1,6 +1,6 @@
 climate.bigbee:
   friendly_name: Ecobee
-  entity_picture: http://cdn.shopify.com/s/files/1/0299/5789/products/ecobee-3-img-1-us_2x_64796d15-61db-4087-876b-860f0449e80b_grande.png
+  entity_picture: /local/ecobee.png
 
 device_tracker.sethsphone:
   icon: mdi:cellphone-android
@@ -19,10 +19,9 @@ group.all_scripts:
   hidden: false
 group.all_switches:
   hidden: false
-group.family_room:
-  friendly_name: "Family Room"
-group.living_room:
-  friendly_name: "Living Room"
+
+input_select.harmony_activity:
+  entity_picture: /local/harmony.png
 
 script.front_porch_timer:
   icon: mdi:timer
@@ -39,7 +38,6 @@ sensor.tomorrows_forecast:
   icon: mdi:thermometer
 sensor.family_room:
   friendly_name: 'Harmony Activity'
-  entity_picture: https://assets.logitech.com/assets/64814/9/harmony-hub-home-automation-control-hub-and-app.png
 sensor.house_occupancy:
   icon: mdi:home-variant
 sensor.ups_battery:

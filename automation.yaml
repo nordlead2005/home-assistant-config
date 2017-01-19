@@ -399,14 +399,14 @@
   action:
   - service: input_select.select_option
     data_template:
-      entity_id: input_select.familyroomharmony
+      entity_id: input_select.harmony_activity
       option: >
         {{ states.sensor.family_room.state }}
 
 - alias: Start Harmony Acitivity from input_select
   trigger:
     platform: state
-    entity_id: input_select.familyroomharmony
+    entity_id: input_select.harmony_activity
   action:
   - service: remote.turn_on
     data_template:
@@ -416,7 +416,7 @@
 - alias: Start PC when Watch PC selected
   trigger:
   - platform: state
-    entity_id: input_select.familyroomharmony
+    entity_id: input_select.harmony_activity
     state: "Watch PC"
   - platform: state
     entity_id: sensor.family_room
@@ -428,7 +428,7 @@
 - alias: Shutdown PC when Watch PC deselected
   trigger:
   - platform: state
-    entity_id: input_select.familyroomharmony
+    entity_id: input_select.harmony_activity
     from: "Watch PC"
   - platform: state
     entity_id: sensor.family_room
