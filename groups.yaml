@@ -7,6 +7,7 @@ default_view:
   - device_tracker.christysphone
   - device_tracker.lydiaabesiphone
   - device_tracker.cindysphone
+  - sensor.seths_internal_location
   - sensor.ups_battery
 #  - group.christmas
   - group.climate

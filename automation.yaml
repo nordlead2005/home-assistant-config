@@ -72,7 +72,7 @@
     entity_id: switch.front_porch
     state: "on"
   - condition: template
-    value_template: "{{ (as_timestamp(now()) - as_timestamp(states.switch.front_porch.last_changed)) < 900 }}"
+    value_template: "{{ (as_timestamp(now()) - as_timestamp(trigger.to_state.last_changed)) < 900 }}"
   trigger:
   - platform: state
     entity_id: device_tracker.sethsphone
@@ -107,6 +107,26 @@
   action:
   - service: homeassistant.turn_on
     entity_id: script.ecobee_resume_program
+
+## TODO: Change to "home & hold" once implemented
+- alias: Heading Home, resume Ecobee
+  trigger:
+  - platform: state
+    entity_id: device_tracker.sethsphone
+    to: "not_home"
+  - platform: state
+    entity_id: device_tracker.christysphone
+    to: "not_home"
+  condition:
+  - condition: template
+    value_template: >
+      {{ trigger.from_state.state != "home" }}
+  - condition: template
+    value_template: >
+      {{ as_timestamp(now()) - as_timestamp(trigger.from_state.last_changed) > 2400 }}
+  action:
+  - service: homeassistant.turn_on
+    entity_id: script.ecobee_resume_program
     
 - alias: Bedtime
   trigger:
@@ -118,7 +138,10 @@
   - service: homeassistant.turn_on
     entity_id: script.turn_off_all
     
-############
+########################################################
+################     MOTION      #######################
+########################################################
+
 - alias: Family Room Occupied
   condition:
     - condition: state
@@ -129,16 +152,20 @@
       state: "PowerOff"
   trigger:
   - platform: state
-    entity_id: binary_sensor.bigbee_occupancy
-    state: 'on'
+    entity_id: sensor.seths_internal_location
+    state: 'family room'
   action:
     - service: homeassistant.turn_on
       entity_id: switch.wemo_switch_1
 - alias: Family Room Empty
+  condition:
+    condition: template
+    value_template: >
+      {{ as_timestamp(now()) - as_timestamp(trigger.from_state.last_changed) < 600 }}
   trigger:
   - platform: state
-    entity_id: binary_sensor.bigbee_occupancy
-    state: 'off'
+    entity_id: sensor.seths_internal_location
+    from: 'family room'
   action:
   - service: homeassistant.turn_off
     entity_id: switch.wemo_switch_1
@@ -193,7 +220,7 @@
   - service: homeassistant.turn_off
     data_template:
       entity_id: >
-        {{trigger.event.data.data['my-id']}}
+        {{trigger.event.data.data['my_id']}}
 
 
 - alias: Power Event Occured
