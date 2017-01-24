@@ -1,3 +1,13 @@
+automation.timer:
+  friendly_name: Enable
+  icon: mdi:clock
+sensor.timer_time_on:
+  friendly_name: Time On
+  icon: mdi:clock
+sensor.timer_time_off:
+  friendly_name: Time Off
+  icon: mdi:clock
+
 climate.bigbee:
   friendly_name: Ecobee
   entity_picture: /local/ecobee.png

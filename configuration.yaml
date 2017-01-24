@@ -94,7 +94,9 @@ tts:
 
 binary_sensor: !include binary_sensor.yaml
 group: !include groups.yaml
+input_boolean: !include input_boolean.yaml
 input_select: !include input_select.yaml
+input_slider: !include input_slider.yaml
 notify: !include notify.yaml
 sensor: !include sensor.yaml
 switch: !include switches.yaml

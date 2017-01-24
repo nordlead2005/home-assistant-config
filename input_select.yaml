@@ -16,3 +16,12 @@ ecobee:
    - cool
    - 'off'
   icon: mdi:air-conditioner
+
+timer_entity:
+  name: Entity
+  options:
+  - front_porch
+  - kitchen_table
+  - wemo_switch_1
+  - wemo_switch_2
+  icon: mdi:format-list-bulleted

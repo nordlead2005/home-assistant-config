@@ -1,0 +1,4 @@
+timer_repeat:
+  name: Repeat
+  initial: off
+  icon: mdi:repeat

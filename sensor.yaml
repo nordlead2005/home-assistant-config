@@ -1,4 +1,4 @@
-- platform: darksky
+﻿- platform: darksky
   api_key: !secret darksky_key
   forecast:
   - 1
@@ -76,3 +76,18 @@
         {% else %}
           NA
         {% endif %}
+        
+    timer_time_on:
+      entity_id:
+      - input_slider.timer_hour
+      - input_slider.timer_minute
+      value_template: >
+        {%set hour, minute = states.input_slider.timer_hour.state|int, states.input_slider.timer_minute.state|int %}{{12 if hour%12==0 else hour%12}}:{{0 if minute|string|length == 1}}{{minute }} {{"AM" if hour <= 12 else "PM"}}
+
+    timer_time_off:
+      entity_id:
+      - input_slider.timer_hour
+      - input_slider.timer_minute
+      - input_slider.timer_length
+      value_template: >
+        {%set duration = states.input_slider.timer_length.state|int %}{%set hour, minute = states.input_slider.timer_hour.state|int + (duration + states.input_slider.timer_minute.state|int)//60,  (states.input_slider.timer_minute.state|int + duration%60)%60 %}{{12 if hour%12 == 0 else hour%12}}:{{0 if minute|string|length == 1}}{{minute }} {{"AM" if hour%24 <= 12 else "PM"}}

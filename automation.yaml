@@ -465,6 +465,44 @@
     entity_id: switch.htpc
 
 ########################################################
+################      TIMER       ######################
+########################################################
+- alias: Timer
+  trigger:
+  - platform: time
+    seconds: 00
+  condition:
+  - condition: template
+    value_template: '{{ now().strftime("%-H")|int == states.input_slider.timer_hour.state|int and now().strftime("%-M")|int == states.input_slider.timer_minute.state|int }}'
+  action:
+  - service: homeassistant.turn_on
+    data_template:
+      entity_id: >
+        switch.{{states.input_select.timer_entity.state}}
+  - delay: '{{states.input_slider.timer_length.state|int // 60 }}:{{ 0 if (((states.input_slider.timer_length.state|int)%60)|string)|length == 1 }}{{states.input_slider.timer_length.state|int % 60}}:00'
+  - service: homeassistant.turn_off
+    data_template:
+      entity_id: >
+        switch.{{states.input_select.timer_entity.state}}
+  - service: automation.turn_off
+    entity_id: automation.timer
+  - condition: state
+    entity_id: input_boolean.timer_repeat
+    state: 'on'
+  - service: automation.turn_on
+    entity_id: automation.timer
+
+- alias: Timer Default Off
+  trigger:
+  - platform: event
+    event_type: homeassistant_start
+  action:
+  - service: automation.turn_off
+    entity_id: automation.timer
+  
+    
+
+########################################################
 ################ CHRISTMAS LIGHTS ######################
 ########################################################
 

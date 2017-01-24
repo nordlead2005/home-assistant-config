@@ -17,6 +17,7 @@ default_view:
   - group.living_room
   - group.outside
   - updater.updater
+  - group.timer
 
 Family Room:
   view: no
@@ -74,6 +75,20 @@ Computers:
   entities:
   - switch.htpc
   - switch.desktop
+  
+Timer:
+  view: no
+  icon: mdi:timer
+  control: hidden
+  entities:
+  - automation.timer
+  - sensor.timer_time_on
+  - sensor.timer_time_off
+  - input_select.timer_entity
+  - input_slider.timer_hour
+  - input_slider.timer_minute
+  - input_slider.timer_length
+  - input_boolean.timer_repeat
 
 Settings:
   view: yes
