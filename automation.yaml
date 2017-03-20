@@ -170,6 +170,27 @@
   - service: homeassistant.turn_off
     entity_id: switch.wemo_switch_1
 
+# Occupancy at night, vacancy during the day
+- alias: Kitchen Table Motion
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+    - condition: state
+      entity_id: switch.kitchen_table
+      state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.kitchen_table_motion
+    state: 'on'
+  action:
+  - service: script.light_timer
+    data:
+      time: '00:05:00'
+      entity: 'switch.kitchen_table'
+
 
 ########################################################
 ################  NOTIFICATIONS  #######################
@@ -184,10 +205,6 @@
     entity_id: switch.wemo_switch_2
     to: "on"
     for: 01:00:00
-  - platform: state
-    entity_id: switch.kitchen_table
-    to: "on"
-    for: 01:30:00
   - platform: state
     entity_id: switch.front_porch
     to: "on"
@@ -233,32 +250,64 @@
     data:
       target: "seths_one_plus_3t"
       message: "Power Event Occured"
+
+- alias: Garage Door Left Open
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.garage_door
+    state: "on"
+    for: 01:00:00
+  action:
+  - service: notify.html5
+    data:
+      message: "Garage Door is Open"
       
 
 ########################################################
 ################ ECOBEE/CLIMATE  #######################
 ########################################################
 
-- alias: Set Input Select ecobee mode changes
+- alias: Set Input Select if ecobee operation mode changes
   trigger:
   - platform: state
-    entity_id: sensor.ecobee_operation_mode
+    entity_id: climate.bigbee
   action:
     service: input_select.select_option
     data_template:
-      entity_id: input_select.ecobee
+      entity_id: input_select.ecobee_operation_mode
       option: >
-        {{ states.sensor.ecobee_operation_mode.state }}
+        {{ states.climate.bigbee.attributes.operation_mode or NA }}
 
-- alias: Set Ecobee mode from input_select
+- alias: Set Ecobee operation mode from input_select
   trigger:
     platform: state
-    entity_id: input_select.ecobee
+    entity_id: input_select.ecobee_operation_mode
   action:
   - service: climate.set_operation_mode
     data_template:
       entity_id: climate.bigbee
       operation_mode: "{{trigger.to_state.state}}"
+
+- alias: Set Input Select if ecobee hold mode changes
+  trigger:
+  - platform: state
+    entity_id: climate.ecobee
+  action:
+    service: input_select.select_option
+    data_template:
+      entity_id: input_select.ecobee_hold_mode
+      option: >-
+        {{states.climate.bigbee.attributes.hold_mode or "none" }}
+
+- alias: Set Ecobee Hold from input_select
+  trigger:
+    platform: state
+    entity_id: input_select.ecobee_hold_mode
+  action:
+  - service: climate.set_hold_mode
+    data_template:
+      entity_id: climate.bigbee
+      hold_mode: "{{trigger.to_state.state}}"
 
 - alias: Warmer Tomorrow
   condition:

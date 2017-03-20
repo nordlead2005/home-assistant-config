@@ -14,3 +14,32 @@
           false
         {%- endif -%}
 
+# Motion Sensors
+- platform: mqtt
+  name: Kitchen Table Motion
+  state_topic: "home/downstairs/kitchen/table/motion"
+  sensor_class: motion
+- platform: mqtt
+  name: Kitchen Cooking Area Motion
+  state_topic: "home/downstairs/kitchen/cooking_area/motion"
+  sensor_class: motion
+- platform: mqtt
+  name: Family Room Motion
+  state_topic: "home/downstairs/family_room/motion"
+  sensor_class: motion
+
+# Door Sensors
+- platform: mqtt
+  name: Garage Door
+  state_topic: "home/downstairs/garage/door"
+  sensor_class: opening
+  payload_on: "OPEN"
+  payload_off: "CLOSED"
+ 
+- platform: mqtt
+  name: Inside Garage Door
+  state_topic: "home/downstairs/garage/inside_door"
+  sensor_class: opening
+  payload_on: "OPEN"
+  payload_off: "CLOSED"
+

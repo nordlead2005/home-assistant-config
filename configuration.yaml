@@ -13,7 +13,12 @@ homeassistant:
   
   customize: !include customize.yaml
   
-#logger:
+logger:
+  default: warning
+  logs:
+    homeassistant.components.switch.mqtt: debug
+    homeassistant.components.hub.mqtt: debug
+    homeassistant.components.mqtt: debug
 
 # Show links to resources in log and frontend
 #introduction:
@@ -32,6 +37,8 @@ http:
   #ip_ban_enabled: True
   #login_attempts_threshold: 5
 
+mqtt:
+
 # Checks for available updates
 updater:
 
@@ -43,9 +50,28 @@ conversation:
 
 # Enables support for tracking state changes over time.
 history:
+  exclude:
+    domains:
+    - automation
+    - group
 
 # View all events in a logbook
 logbook:
+  exclude:
+    entities:
+    - binary_sensor.kitchen_table_motion
+    - automation.kitchen_table_motion
+    - script.light_timer
+    - script.timed_light
+
+recorder:
+  purge_days: 7
+  exclude:
+    domains:
+    - automation
+    entities:
+    - script.light_timer
+    - script.timed_light
 
 device_tracker:
   - platform: ddwrt
@@ -93,6 +119,7 @@ tts:
   platform: google
 
 binary_sensor: !include binary_sensor.yaml
+cover: !include cover.yaml
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_select: !include input_select.yaml

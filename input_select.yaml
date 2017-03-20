@@ -8,7 +8,7 @@ harmony_activity:
    - Netflix pc
    - ANTENNA TV
   icon: mdi:television-guide
-ecobee:
+ecobee_operation_mode:
   name: Operation Mode
   options:
    - auto
@@ -16,6 +16,16 @@ ecobee:
    - cool
    - 'off'
   icon: mdi:air-conditioner
+ecobee_hold_mode:
+  name: Hold Mode
+  options:
+  - none
+  - home
+  - away
+  - sleep
+  - temp
+  icon: mdi:lock
+
 
 timer_entity:
   name: Entity

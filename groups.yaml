@@ -25,6 +25,7 @@ Family Room:
   control: hidden
   entities:
   - switch.wemo_switch_1
+  - cover.family_room_shades
   - input_select.harmony_activity
   - switch.htpc
   - script.fix_harmony
@@ -57,7 +58,8 @@ Climate:
   - sensor.dark_sky_temperature
   - sensor.dark_sky_wind_speed
   - sensor.tomorrows_forecast
-  - input_select.ecobee
+  - input_select.ecobee_operation_mode
+  - input_select.ecobee_hold_mode
   - switch.ecobee_away_mode
   - climate.bigbee
   - script.ecobee_resume_program
@@ -90,6 +92,31 @@ Timer:
   - input_slider.timer_length
   - input_boolean.timer_repeat
 
+Doors:
+  view: no
+  icon: mdi:door
+  control: hidden
+  entities:
+  - binary_sensor.garage_door
+  - binary_sensor.inside_garage_door
+
+Water Level:
+  view: no
+  icon: mdi:water
+  control: hidden
+  entities:
+  - sensor.kitchen_sink_water_level
+  - sensor.kitchen_dishwasher_water_level
+  - sensor.kitchen_fridge_water_level
+  - sensor.basement_sump_water_level
+  - sensor.basement_water_heater_water_level
+
+Sensors:
+  view: yes
+  entities:
+  - group.doors
+  - group.water_level
+
 Settings:
   view: yes
   icon: mdi:settings
@@ -99,3 +126,4 @@ Settings:
   - group.all_remotes
   - group.all_scripts
   - group.all_switches
+  - group.water_level

@@ -19,6 +19,28 @@ front_porch_timer:
       data:
         entity_id: switch.front_porch
 
+light_timer:
+  alias: "Turn on a light and set a timer for it"
+  sequence:
+    - service: script.turn_off
+      data:
+        entity_id: script.timed_light
+    - service: homeassistant.turn_on
+      data_template:
+        entity_id: "{{entity}}"
+    - service: script.timed_light
+      data_template:
+        time: "{{time}}"
+        entity: "{{entity}}"
+
+timed_light:
+  alias: "Set a timer and then turn off a light if expired"
+  sequence:
+  - delay: "{{time}}"
+  - service: homeassistant.turn_off
+    data_template:
+      entity_id: "{{entity}}"
+
 ecobee_set_away_mode:
   alias: Set away mode on the ecobee
   sequence:

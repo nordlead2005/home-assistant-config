@@ -26,3 +26,8 @@
       turn_off:
         service: script.turn_on
         entity_id: script.ecobee_clear_away_mode
+
+- platform: mqtt
+  name: Relay Test
+  command_topic: "test/relay/set"
+  state_topic: "test/relay"

@@ -27,25 +27,21 @@
       entity_id:
       - sensor.seths_internal_location_data
       value_template: >
-        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split(",")) %}
+        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split( ",")) %}
         {{location}}
 
     seths_internal_location_text:
       entity_id:
       - sensor.seths_internal_location_data
       value_template: >
-        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split(",")) %}
+        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split( ",")) %}
         There is a {{(float(probability)*100)|round(0)}}% chance Seth is at {{location}}. Last seen at {{as_timestamp(time)|timestamp_local}}
     
     family_room:
       entity_id:
       - remote.familyroom
-      value_template: >-
-        {% if states.remote.familyroom != None %}
-          {{ states.remote.familyroom.attributes.current_activity }}
-        {% else %}
-          NA
-        {% endif %}
+      value_template: >
+        {{ states.remote.familyroom.attributes.current_activity if states.remote.familyroom != none else "PowerOff" }}
 
     indoor_temperature:
       friendly_name: Indoor Temperature
@@ -53,30 +49,20 @@
       - climate.bigbee
       unit_of_measurement: 'F'
       value_template: >-
-        {% if states.climate.bigbee != None %}
-          {{ states.climate.bigbee.attributes.current_temperature }}
-        {% else %}
-          NA
-        {% endif %}
+        {{ states.climate.bigbee.attributes.current_temperature if states.climate.bigbee != none else NA}}
         
     tomorrows_forecast:
       friendly_name: Tomorrow
       entity_id:
       - sensor.dark_sky_daily_high_temperature_1
       - sensor.dark_sky_daily_low_temperaure_1
-      value_template: >
-        {{states.sensor.dark_sky_daily_low_temperature_1.state}} - {{states.sensor.dark_sky_daily_high_temperature_1.state}} {{states.sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}
-
-    ecobee_operation_mode:
-      entity_id:
-      - climate.bigbee
       value_template: >-
-        {% if states.climate.bigbee != None %}
-          {{ states.climate.bigbee.attributes.operation_mode }}
+        {% if states.sensor.dark_sky_daily_low_temperature_1 != none %}
+          {{states.sensor.dark_sky_daily_low_temperature_1.state}} - {{states.sensor.dark_sky_daily_high_temperature_1.state}} {{states.sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}
         {% else %}
           NA
         {% endif %}
-        
+
     timer_time_on:
       entity_id:
       - input_slider.timer_hour
@@ -91,3 +77,23 @@
       - input_slider.timer_length
       value_template: >
         {%set duration = states.input_slider.timer_length.state|int %}{%set hour, minute = states.input_slider.timer_hour.state|int + (duration + states.input_slider.timer_minute.state|int)//60,  (states.input_slider.timer_minute.state|int + duration%60)%60 %}{{12 if hour%12 == 0 else hour%12}}:{{0 if minute|string|length == 1}}{{minute }} {{"AM" if hour%24 <= 12 else "PM"}}
+
+- platform: mqtt
+  name: relay capacitance
+  state_topic: "test/relay/cap"
+- platform: mqtt
+  name: Kitchen Sink Water Level
+  state_topic: "home/downstairs/kitchen/sink/water_level"
+- platform: mqtt
+  name: Kitchen Dishwasher Water Level
+  state_topic: "home/downstairs/kitchen/dishwasher/water_level"
+- platform: mqtt
+  name: Kitchen Fridge Water Level
+  state_topic: "home/downstairs/kitchen/fridge/water_level"
+- platform: mqtt
+  name: Basement Sump Water Level
+  state_topic: "home/basement/sump/water_level"
+- platform: mqtt
+  name: Basement Water Heater Water Level
+  state_topic: "home/basement/water_heater/water_level"
+

@@ -1,0 +1,5 @@
+- platform: mqtt
+  name: "Family Room Shades"
+  state_topic: "home/downstairs/family_room/shades"
+  command_topic: "home/downstairs/family_room/shades/set"
+  
