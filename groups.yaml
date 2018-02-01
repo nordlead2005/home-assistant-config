@@ -39,7 +39,7 @@ Sensors:
   - group.doors
   - group.light_level
   - group.water_level
-  - group.batteries
+  - group.cell_phones
   - group.pc_status
 
 Settings:
@@ -196,9 +196,9 @@ Light Level:
   - sensor.kitchen_light_level
   - sensor.living_room_light_level
 
-Batteries:
+Cell Phones:
   view: no
-  icon: mdi:battery
+  icon: mdi:cellphone-android
   control: hidden
   entities:
     - sensor.seths_cell_battery

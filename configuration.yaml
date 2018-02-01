@@ -47,6 +47,7 @@ frontend:
   #login_attempts_threshold: 5
 
 mqtt:
+  broker: localhost
 
 # Checks for available updates
 updater:
@@ -133,7 +134,7 @@ wemo:
 remote:
   - platform: harmony
     name: FamilyRoom
-    host: 192.168.125.130
+    host: 192.168.125.30
 
 #media_player:
 #  - platform: cast

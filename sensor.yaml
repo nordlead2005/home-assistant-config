@@ -36,11 +36,23 @@
     seths_cell_battery:
       friendly_name: "Seth's Cell Battery"
       unit_of_measurement: '%'
+      icon_template: >-
+        {% if is_state('binary_sensor.seths_cell_charging', 'on') %}
+          mdi:battery-charging
+        {% else %}
+          mdi:battery
+        {% endif %}
       value_template: >
         {{ states.device_tracker['7ac50169'].attributes.battery|int if states.device_tracker['7ac50169'].attributes != none else 'unknown' }}
     christys_cell_battery:
       friendly_name: "Christy's Cell Battery"
       unit_of_measurement: '%'
+      icon_template: >-
+        {% if is_state('binary_sensor.christys_cell_charging', 'on') %}
+          mdi:battery-charging
+        {% else %}
+          mdi:battery
+        {% endif %}
       value_template: >
         {{ states.device_tracker.lgd801c8e9841a.attributes.battery|int if states.device_tracker.lgd801c8e9841a.attributes != none else 'unknown' }}
 #    seths_internal_location:
