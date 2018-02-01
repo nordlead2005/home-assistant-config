@@ -1,0 +1,4 @@
+- platform: generic
+  name: Travel Time Map
+  still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{states.sensor.center_travel_time_map_on.state}}&zoom={{states.input_number.travel_time_map_zoom.state|int+6}}&size=600x300&maptype=roadmap&markers=icon:https://hass.pinternet.us/local/male-icon.png|{{states.device_tracker["7ac50169"].attributes.latitude}},{{states.device_tracker["7ac50169"].attributes.longitude}}&markers=icon:https://hass.pinternet.us/local/female-icon.png|{{states.device_tracker.lgd801c8e9841a.attributes.latitude}},{{states.device_tracker.lgd801c8e9841a.attributes.longitude}}&key={{states.input_text.gcm_key.state}}
+  limit_refetch_to_url_change: true

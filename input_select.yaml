@@ -1,37 +1,101 @@
-harmony_activity:
-  name: Harmony Activity
+kitchen_motion:
+  name: 3-way state of the kitchen lights
   options:
-   - PowerOff
-   - Watch PC
-   - Play Wii
-   - Play PS3
-   - Netflix pc
-   - ANTENNA TV
-  icon: mdi:television-guide
-ecobee_operation_mode:
-  name: Operation Mode
+  - 'on'
+  - 'off'
+  - 'motion'
+  initial: motion
+  icon: mdi:switch
+
+living_room_motion:
+  name: 3-way state of the living room lights
   options:
-   - auto
-   - heat
-   - cool
-   - 'off'
-  icon: mdi:air-conditioner
-ecobee_hold_mode:
-  name: Hold Mode
+  - 'on'
+  - 'off'
+  - 'motion'
+  initial: motion
+  icon: mdi:switch
+
+dining_room_motion:
+  name: 3-way state of the dining room lights
   options:
-  - none
-  - home
-  - away
-  - sleep
-  - temp
-  icon: mdi:lock
+  - 'on'
+  - 'off'
+  - 'motion'
+  initial: motion
+  icon: mdi:switch
+
+travel_time_center_map_on:
+  name: Center Map On
+  icon: mdi:account-multiple
+  options:
+    - Average
+    - Christy
+    - Seth
+
+seths_location:
+  name: Seth's Current Location
+  options:
+    - 'home'
+    - 'not_home'
+    - 'just_left'
+    - 'just_arrived'
+    - 'work'
+    - 'church'
+    - 'parentsHouse'
+    - 'inLawsHouse'
+    - 'northwestYMCA'
+    - 'wegmans'
+
+christys_location:
+  name: Christy's Current Location
+  options:
+    - 'home'
+    - 'not_home'
+    - 'just_left'
+    - 'just_arrived'
+    - 'work'
+    - 'church'
+    - 'parentsHouse'
+    - 'inLawsHouse'
+    - 'northwestYMCA'
+    - 'wegmans'
 
 
-timer_entity:
-  name: Entity
-  options:
-  - front_porch
-  - kitchen_table
-  - wemo_switch_1
-  - wemo_switch_2
-  icon: mdi:format-list-bulleted
+#harmony_activity:
+#  name: Harmony Activity
+#  options:
+#   - PowerOff
+#   - Watch PC
+#   - Play Wii
+#   - Play PS3
+#   - Netflix pc
+#   - ANTENNA TV
+#  icon: mdi:television-guide
+#ecobee_operation_mode:
+#  name: Operation Mode
+#  options:
+#   - auto
+#   - heat
+#   - cool
+#   - 'off'
+#  icon: mdi:air-conditioner
+#ecobee_hold_mode:
+#  name: Hold Mode
+#  options:
+#  - none
+#  - home
+#  - away
+#  - sleep
+#  - temp
+#  icon: mdi:lock
+
+
+#timer_entity:
+#  name: Entity
+#  options:
+#  - front_porch
+#  - kitchen_table
+#  - wemo_switch_1
+#  - wemo_switch_2
+#  icon: mdi:format-list-bulleted

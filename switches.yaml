@@ -1,13 +1,13 @@
 - platform: wake_on_lan
   name: Desktop
   mac_address: "00:25:22:F8:BB:5E"
-  host: 192.168.125.115
+  host: 192.168.125.90
   turn_off:
     service: shell_command.shutdown_desktop
 - platform: wake_on_lan
   name: HTPC
   mac_address: "E0:CB:4E:26:E2:69"
-  host: 192.168.125.103
+  host: 192.168.125.91
   turn_off:
     service: shell_command.shutdown_htpc
 - platform: template
@@ -28,6 +28,46 @@
         entity_id: script.ecobee_clear_away_mode
 
 - platform: mqtt
-  name: Relay Test
-  command_topic: "test/relay/set"
-  state_topic: "test/relay"
+  name: Garage
+  command_topic: "home/downstairs/garage/lights/set"
+  state_topic: "home/downstairs/garage/lights"
+  availability_topic: "home/esp8266KitchenTableLights/availability"
+- platform: mqtt
+  name: Kitchen
+  command_topic: "home/downstairs/kitchen/lights/set"
+  state_topic: "home/downstairs/kitchen/lights"
+- platform: mqtt
+  name: Kitchen Sink
+  command_topic: "home/downstairs/kitchen/sink/lights/set"
+  state_topic: "home/downstairs/kitchen/sink/lights"
+- platform: mqtt
+  name: Kitchen Table
+  command_topic: "home/downstairs/kitchen/table/lights/set"
+  state_topic: "home/downstairs/kitchen/table/lights"
+  availability_topic: "home/esp8266KitchenTableLights/availability"
+- platform: mqtt
+  name: Living Room Fireplace
+  command_topic: "home/downstairs/living_room/lights/set"
+  state_topic: "home/downstairs/living_room/lights"
+  availability_topic: "home/esp8266LivingRoomPorch/availability"
+- platform: mqtt
+  name: Back Porch Fan
+  command_topic: "home/downstairs/back_porch/fan/set"
+  state_topic: "home/downstairs/back_porch/fan"
+  availability_topic: "home/esp8266LivingRoomPorch/availability"
+- platform: mqtt
+  name: Pool Pump
+  command_topic: "home/outside/pool/pump/set"
+  state_topic: "home/outside/pool/pump"
+
+- platform: mqtt
+  name: "Extension 1"
+  command_topic: "home/extension/1/set"
+  state_topic: "home/extension/1"
+  availability_topic: "home/esp8266Extension1/availability"
+
+- platform: mqtt
+  name: "Extension 2"
+  command_topic: "home/extension/2/set"
+  state_topic: "home/extension/2"
+  availability_topic: "home/esp8266Extension2/availability"

@@ -1,86 +1,151 @@
-﻿- platform: darksky
-  api_key: !secret darksky_key
-  forecast:
-  - 1
-  monitored_conditions:
-  - temperature
-  - wind_speed
-  - temperature_max
-  - temperature_min
+﻿#- platform: darksky
+#  api_key: !secret darksky_key
+#  forecast:
+#  - 1
+#  monitored_conditions:
+#  - temperature
+#  - wind_speed
+#  - temperature_max
+#  - temperature_min
 
 - platform: command_line
   name: UPS Battery
   command: 'sudo pwrstat -status | grep Battery | grep -o "[0-9]\{1,3\}"'
   unit_of_measurement: "%"
 
-- platform: rest
-  name: Seth's Internal Location Data
-  scan_interval: 1
-  resource: !secret seths_internal_location
-  value_template: >
-    {% set key, value = (value_json.users.seth[0].rf|dictsort(false, "value")|last) %}
-    {{key}},{{value}},{{value_json.users.seth[0].time.split(".")[0]+"+0000"}}
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /mnt/backup
+    - type: disk_use_percent
+      arg: /mnt/share
+    - type: memory_use_percent
+    - type: swap_use_percent
+    - type: processor_use
+
+#- platform: rest
+#  name: Seth's Internal Location Data
+#  scan_interval: 1
+#  resource: !secret seths_internal_location
+#  value_template: >
+#    {% set key, value = (value_json.users.seth[0].rf|dictsort(false, "value")|last) %}
+#    {{key}},{{value}},{{value_json.users.seth[0].time.split(".")[0]+"+0000"}}
 
 - platform: template
   sensors:
-    seths_internal_location:
-      entity_id:
-      - sensor.seths_internal_location_data
+    seths_cell_battery:
+      friendly_name: "Seth's Cell Battery"
+      unit_of_measurement: '%'
       value_template: >
-        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split( ",")) %}
-        {{location}}
+        {{ states.device_tracker['7ac50169'].attributes.battery|int if states.device_tracker['7ac50169'].attributes != none else 'unknown' }}
+    christys_cell_battery:
+      friendly_name: "Christy's Cell Battery"
+      unit_of_measurement: '%'
+      value_template: >
+        {{ states.device_tracker.lgd801c8e9841a.attributes.battery|int if states.device_tracker.lgd801c8e9841a.attributes != none else 'unknown' }}
+#    seths_internal_location:
+#      entity_id:
+#      - sensor.seths_internal_location_data
+#      value_template: >
+#        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split( ",")) %}
+#        {{location}}
 
-    seths_internal_location_text:
-      entity_id:
-      - sensor.seths_internal_location_data
-      value_template: >
-        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split( ",")) %}
-        There is a {{(float(probability)*100)|round(0)}}% chance Seth is at {{location}}. Last seen at {{as_timestamp(time)|timestamp_local}}
+#    seths_internal_location_text:
+#      entity_id:
+#      - sensor.seths_internal_location_data
+#      value_template: >
+#        {% set location, probability, time = (states.sensor.seths_internal_location_data.state.split( ",")) %}
+#        There is a {{(float(probability)*100)|round(0)}}% chance Seth is at {{location}}. Last seen at {{as_timestamp(time)|timestamp_local}}
     
     family_room:
-      entity_id:
-      - remote.familyroom
+#      entity_id:
+#      - remote.familyroom
       value_template: >
         {{ states.remote.familyroom.attributes.current_activity if states.remote.familyroom != none else "PowerOff" }}
 
-    indoor_temperature:
-      friendly_name: Indoor Temperature
-      entity_id:
-      - climate.bigbee
-      unit_of_measurement: 'F'
-      value_template: >-
-        {{ states.climate.bigbee.attributes.current_temperature if states.climate.bigbee != none else NA}}
+#    indoor_temperature:
+#      friendly_name: Indoor Temperature
+#      entity_id:
+#      - climate.bigbee
+#      unit_of_measurement: 'F'
+#      value_template: >-
+#        {{ states.climate.bigbee.attributes.current_temperature if states.climate.bigbee != none else NA}}
         
-    tomorrows_forecast:
-      friendly_name: Tomorrow
-      entity_id:
-      - sensor.dark_sky_daily_high_temperature_1
-      - sensor.dark_sky_daily_low_temperaure_1
+#    tomorrows_forecast:
+#      friendly_name: Tomorrow
+#      entity_id:
+#      - sensor.dark_sky_daily_high_temperature_1
+#      - sensor.dark_sky_daily_low_temperaure_1
+#      value_template: >-
+#        {% if states.sensor.dark_sky_daily_low_temperature_1 != none %}
+#          {{states.sensor.dark_sky_daily_low_temperature_1.state}} - {{states.sensor.dark_sky_daily_high_temperature_1.state}} {{states.sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}
+#        {% else %}
+#          NA
+#        {% endif %}
+
+    christmas_tree_water_level_text:
+#      entity_id:
+#      - sensor.christmas_tree_water_level
+      value_template: >
+        {%-set level = states.sensor.christmas_tree_water_level.state | float -%}
+        {{ "critical" if level < 10 else "low" if level < 100 else "full" if level > 550 else states.sensor.christmas_tree_water_level_text.state }}
+
+    center_travel_time_map_on:
+#      entity_id:
+#        - device_tracker.7ac80169
+#        - device_tracker.lgd801c8e9841a
+#        - input_select.center_travel_time_map_on
       value_template: >-
-        {% if states.sensor.dark_sky_daily_low_temperature_1 != none %}
-          {{states.sensor.dark_sky_daily_low_temperature_1.state}} - {{states.sensor.dark_sky_daily_high_temperature_1.state}} {{states.sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}
+        {% set center = states.input_select.center_travel_time_map_on.state %}
+        {% if center == "Christy"%}
+          {%set lat,lon = states.device_tracker.lgd801c8e9841a.attributes.latitude,states.device_tracker.lgd801c8e9841a.attributes.longitude%}
+        {% elif center == "Seth" %}
+          {% set lat,lon = states.device_tracker['7ac50169'].attributes.latitude,states.device_tracker['7ac50169'].attributes.longitude%}
         {% else %}
-          NA
+          {% set lat,lon = (states.device_tracker.lgd801c8e9841a.attributes.latitude + states.device_tracker['7ac50169'].attributes.latitude)/2.0, (states.device_tracker.lgd801c8e9841a.attributes.longitude + states.device_tracker['7ac50169'].attributes.longitude)/2.0%}
         {% endif %}
+        {{ [lat,lon]|join(',') }}
 
-    timer_time_on:
-      entity_id:
-      - input_slider.timer_hour
-      - input_slider.timer_minute
-      value_template: >
-        {%set hour, minute = states.input_slider.timer_hour.state|int, states.input_slider.timer_minute.state|int %}{{12 if hour%12==0 else hour%12}}:{{0 if minute|string|length == 1}}{{minute }} {{"AM" if hour <= 12 else "PM"}}
+      
 
-    timer_time_off:
-      entity_id:
-      - input_slider.timer_hour
-      - input_slider.timer_minute
-      - input_slider.timer_length
-      value_template: >
-        {%set duration = states.input_slider.timer_length.state|int %}{%set hour, minute = states.input_slider.timer_hour.state|int + (duration + states.input_slider.timer_minute.state|int)//60,  (states.input_slider.timer_minute.state|int + duration%60)%60 %}{{12 if hour%12 == 0 else hour%12}}:{{0 if minute|string|length == 1}}{{minute }} {{"AM" if hour%24 <= 12 else "PM"}}
+# added in 0.57, which is buggy like 0.60
+- platform: deluge
+  host: 127.0.0.1
+  username: !secret deluge_user
+  password: !secret deluge_password
+  monitored_variables:
+    - 'current_status'
+    - 'download_speed'
+    - 'upload_speed'
 
-- platform: mqtt
-  name: relay capacitance
-  state_topic: "test/relay/cap"
+- platform: google_travel_time
+  name: Travel Time Christy To Seth
+  api_key: !secret gcm_key
+  origin: device_tracker.lgd801c8e9841a
+  destination: device_tracker.7ac50169
+  update_interval: 120
+
+- platform: google_travel_time
+  name: Travel Time Seth To Christy
+  api_key: !secret gcm_key
+  origin: device_tracker.7ac50169
+  destination: device_tracker.lgd801c8e9841a
+  update_interval: 120
+
+- platform: google_travel_time
+  name: Travel Time Christy To Home
+  api_key: !secret gcm_key
+  origin: device_tracker.lgd801c8e9841a
+  destination: home
+  update_interval: 300
+
+- platform: google_travel_time
+  name: Travel Time Seth To Home
+  api_key: !secret gcm_key
+  origin: device_tracker.7ac50169
+  destination: home
+  update_interval: 300
+
 - platform: mqtt
   name: Kitchen Sink Water Level
   state_topic: "home/downstairs/kitchen/sink/water_level"
@@ -93,7 +158,19 @@
 - platform: mqtt
   name: Basement Sump Water Level
   state_topic: "home/basement/sump/water_level"
+  availability_topic: "home/esp8266BasementSensors/availability"
 - platform: mqtt
   name: Basement Water Heater Water Level
   state_topic: "home/basement/water_heater/water_level"
-
+- platform: mqtt
+  name: Washer Water Level
+  state_topic: "home/basement/washer/water_level"
+- platform: mqtt
+  name: Kitchen Light Level
+  state_topic: "home/downstairs/kitchen/lux"
+- platform: mqtt
+  name: Living Room Light Level
+  state_topic: "home/downstairs/living_room/light_level"
+- platform: mqtt
+  name: Christmas Tree Water Level
+  state_topic: "home/downstairs/christmas_tree/water_level"

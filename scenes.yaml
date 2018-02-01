@@ -1,0 +1,48 @@
+- name: Kitchen On
+  entities:
+    switch.kitchen_table: on
+    switch.kitchen: on
+    input_select.kitchen_motion:
+      option: 'on'
+- name: Kitchen Off
+  entities:
+    switch.kitchen_table: off
+    switch.kitchen: off
+    input_select.kitchen_motion:
+      option: 'off'
+- name: Kitchen Motion
+  entities:
+    input_select.kitchen_motion:
+      option: 'motion'
+
+- name: Living Room On
+  entities:
+    switch.wemo_switch_2: on
+    input_select.living_room_motion:
+      option: 'on'
+- name: Living Room Off
+  entities:
+    switch.wemo_switch_2: off
+    input_select.living_room_motion:
+      option: 'off'
+- name: Living Room Motion
+  entities:
+    input_select.living_room_motion:
+      option: 'motion'
+
+- name: Dining Room On
+  entities:
+    switch.dining_room: on
+    input_select.dining_room_motion:
+      option: 'on'
+- name: Dining Room Off
+  entities:
+    switch.dining_room: off
+    input_select.dining_room_motion:
+      option: 'off'
+- name: Dining Room Motion
+  entities:
+    input_select.dining_room_motion:
+      option: 'motion'
+
+

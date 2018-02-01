@@ -2,3 +2,18 @@ timer_repeat:
   name: Repeat
   initial: off
   icon: mdi:repeat
+
+notify_travel_time_christy_to_seth:
+  name: Notify Seth of Christy's Travel Time
+  initial: off
+  icon: mdi:message-alert
+
+notify_travel_time_seth_to_christy:
+  name: Notify Christy of Seth's Travel Time
+  initial: off
+  icon: mdi:message-alert
+
+motion_detected:
+  name: Motion Sensor Detected Motion
+  initial: off
+  icon: mdi:run-fast

@@ -1,121 +1,46 @@
+###################################
+############ VIEWS ################
+###################################
 default_view:
   view: yes
   icon: mdi:home
   entities:
-  - binary_sensor.home_occupancy
-  - device_tracker.sethsphone
-  - device_tracker.christysphone
-  - device_tracker.lydiaabesiphone
-  - device_tracker.cindysphone
-  - sensor.seths_internal_location
-  - sensor.ups_battery
-#  - group.christmas
+#  - binary_sensor.someone_is_home
+  - device_tracker.7ac50169
+  - device_tracker.lgd801c8e9841a
+  - sensor.guest_count
+  - group.christmas
   - group.climate
   - group.computers
   - group.family_room
   - group.kitchen
+  - group.garage
   - group.living_room
+  - group.dining_room
   - group.outside
   - updater.updater
-  - group.timer
+#  - group.timer
 
-Family Room:
-  view: no
-  icon: mdi:television-guide
-  control: hidden
+Location:
+  view: yes
+  icon: mdi:map
   entities:
-  - switch.wemo_switch_1
-  - cover.family_room_shades
-  - input_select.harmony_activity
-  - switch.htpc
-  - script.fix_harmony
-
-Kitchen:
-  view: no
-  control: hidden
-  entities:
-  - switch.kitchen_table
-
-Living Room:
-  view: no
-  control: hidden
-  entities:
-  - switch.wemo_switch_2
-
-Outside:
-  view: no
-  entities:
-  - switch.front_porch
-  - script.front_porch_timer
-  - script.timed_front_porch
-
-Climate:
-  view: no
-  icon: mdi:thermometer
-  control: hidden
-  entities:
-  - sensor.indoor_temperature
-  - sensor.dark_sky_temperature
-  - sensor.dark_sky_wind_speed
-  - sensor.tomorrows_forecast
-  - input_select.ecobee_operation_mode
-  - input_select.ecobee_hold_mode
-  - switch.ecobee_away_mode
-  - climate.bigbee
-  - script.ecobee_resume_program
-  
-Christmas:
-  view: no
-  icon: mdi:pine-tree
-  entities:
-#  - switch.wemo_switch_1
-#  - switch.wemo_switch_2
-
-Computers:
-  view: no
-  icon: mdi:computer-tower
-  entities:
-  - switch.htpc
-  - switch.desktop
-  
-Timer:
-  view: no
-  icon: mdi:timer
-  control: hidden
-  entities:
-  - automation.timer
-  - sensor.timer_time_on
-  - sensor.timer_time_off
-  - input_select.timer_entity
-  - input_slider.timer_hour
-  - input_slider.timer_minute
-  - input_slider.timer_length
-  - input_boolean.timer_repeat
-
-Doors:
-  view: no
-  icon: mdi:door
-  control: hidden
-  entities:
-  - binary_sensor.garage_door
-  - binary_sensor.inside_garage_door
-
-Water Level:
-  view: no
-  icon: mdi:water
-  control: hidden
-  entities:
-  - sensor.kitchen_sink_water_level
-  - sensor.kitchen_dishwasher_water_level
-  - sensor.kitchen_fridge_water_level
-  - sensor.basement_sump_water_level
-  - sensor.basement_water_heater_water_level
+    - group.map
+    - group.map_control
+    - group.notification_control
+    - group.family
+#    - group.seth_location
+#    - group.christy_location
 
 Sensors:
   view: yes
+  icon: mdi:radar
   entities:
   - group.doors
+  - group.light_level
   - group.water_level
+  - group.batteries
+  - group.pc_status
 
 Settings:
   view: yes
@@ -127,3 +52,182 @@ Settings:
   - group.all_scripts
   - group.all_switches
   - group.water_level
+
+###################################
+############ LOCATION #############
+###################################
+Map:
+  view: no
+  entities:
+    - camera.travel_time_map
+
+Map Control:
+  view: no
+  entities:
+    - sensor.travel_time_christy_to_seth
+    - sensor.travel_time_seth_to_christy
+    - input_select.travel_time_center_map_on
+    - input_number.travel_time_map_zoom
+
+Notification Control:
+  view: no
+  entities:
+    - input_boolean.notify_travel_time_christy_to_seth
+    - input_boolean.notify_travel_time_seth_to_christy
+
+Family:
+  view: no
+  icon: mdi:account-multiple
+  entities:
+    - device_tracker.christysphone
+    - device_tracker.lgd801c8e9841a
+    - device_tracker.sethsphone
+    - device_tracker.7ac50169
+
+Christy Location:
+  view: no
+  icon: mdi:cellphone
+  entities:
+    - device_tracker.christysphone
+    - device_tracker.lgd801c8e9841a
+    - input_select.christys_location
+
+Seth Location:
+  view: no
+  icon: mdi:cellphone
+  entities:
+    - device_tracker.sethsphone
+    - device_tracker.7ac50169
+    - input_select.seths_location
+
+#####################################
+############ MAIN VIEW ##############
+#####################################
+Christmas:
+  view: no
+  icon: mdi:pine-tree
+  entities:
+  - switch.extension_1
+  - switch.extension_2
+
+Climate:
+  view: no
+  icon: mdi:thermometer
+  control: hidden
+  entities:
+#  - sensor.dark_sky_temperature
+#  - sensor.dark_sky_wind_speed
+#  - sensor.tomorrows_forecast
+  - switch.ecobee_away_mode
+  - climate.bigbee
+  - script.ecobee_resume_program
+  
+Computers:
+  view: no
+  icon: mdi:computer-tower
+  entities:
+  - switch.htpc
+  - switch.desktop
+
+Dining Room:
+  view: no
+  control: hidden
+  entities:
+  - switch.dining_room
+  - input_select.dining_room_motion
+  - switch.desktop
+
+Family Room:
+  view: no
+  icon: mdi:television-guide
+  control: hidden
+  entities:
+  - switch.wemo_switch_1
+  - cover.family_room_shades
+  - switch.htpc
+  - script.fix_harmony
+
+Garage:
+  view: no
+  control: hidden
+  entities:
+  - switch.garage
+
+Kitchen:
+  view: no
+  control: hidden
+  entities:
+  - switch.kitchen_table
+  - switch.kitchen
+  - switch.kitchen_sink
+  - input_select.kitchen_motion
+
+Living Room:
+  view: no
+  control: hidden
+  entities:
+  - switch.wemo_switch_2
+  - switch.living_room_fireplace
+  - input_select.living_room_motion
+
+Outside:
+  view: no
+  entities:
+  - switch.front_porch
+  - switch.back_porch_fan
+  - switch.pool_pump
+
+####################################
+############# SENSORS ##############
+####################################  
+Doors:
+  view: no
+  icon: mdi:door
+  control: hidden
+  entities:
+  - binary_sensor.garage_door
+  - binary_sensor.inside_garage_door
+
+Light Level:
+  view: no
+  icon: mdi:sun
+  control: hidden
+  entities:
+  - sensor.kitchen_light_level
+  - sensor.living_room_light_level
+
+Batteries:
+  view: no
+  icon: mdi:battery
+  control: hidden
+  entities:
+    - sensor.seths_cell_battery
+    - sensor.christys_cell_battery
+
+PC Status:
+  view: no
+  icon: mdi:server
+  control: hidden
+  entities:
+  - sensor.cpu_used
+  - sensor.ram_used
+  - sensor.swap_used
+  - sensor.disk_used_mntshare
+  - sensor.disk_used_mntbackup
+  - sensor.ups_battery
+
+Water Level:
+  view: no
+  icon: mdi:water
+  control: hidden
+  entities:
+  - sensor.kitchen_sink_water_level
+  - sensor.kitchen_dishwasher_water_level
+  - sensor.kitchen_fridge_water_level
+  - sensor.basement_sump_water_level
+  - sensor.basement_water_heater_water_level
+  - sensor.christmas_tree_water_level_text
+
+####################################
+########### SETTINGS ###############
+####################################

@@ -1,45 +1,84 @@
-- platform: template
-  sensors:
-    home_occupancy:
-      friendly_name: Home Occupancy
-      entity_id:
-      - binary_sensor.bigbee_occupancy
-      - binary_sensor.lilbee_occupancy
-      sensor_class: occupancy
-      value_template: >-
-        {%- if is_state("binary_sensor.bigbee_occupancy", "on")
-            or is_state("binary_sensor.lilbee_occupancy", "on") -%}
-          true
-        {%- else -%}
-          false
-        {%- endif -%}
+#- platform: template
+#  sensors:
+#    home_occupancy:
+#      friendly_name: Home Occupancy
+#      entity_id:
+#      - binary_sensor.bigbee_occupancy
+#      - binary_sensor.lilbee_occupancy
+#      device_class: occupancy
+#      value_template: >-
+#        {%- if is_state("binary_sensor.bigbee_occupancy", "on")
+#            or is_state("binary_sensor.lilbee_occupancy", "on") -%}
+#          true
+#        {%- else -%}
+#          false
+#        {%- endif -%}
 
 # Motion Sensors
 - platform: mqtt
+  name: Dining Room Motion
+  state_topic: "home/downstairs/dining_room/motion"
+  device_class: motion
+- platform: mqtt
   name: Kitchen Table Motion
   state_topic: "home/downstairs/kitchen/table/motion"
-  sensor_class: motion
+  device_class: motion
 - platform: mqtt
-  name: Kitchen Cooking Area Motion
-  state_topic: "home/downstairs/kitchen/cooking_area/motion"
-  sensor_class: motion
+  name: Kitchen Motion
+  state_topic: "home/downstairs/kitchen/motion"
+  device_class: motion
 - platform: mqtt
-  name: Family Room Motion
-  state_topic: "home/downstairs/family_room/motion"
-  sensor_class: motion
+  name: Living Room Motion
+  state_topic: "home/downstairs/living_room/motion"
+  device_class: motion
+#- platform: mqtt
+#  name: Family Room Motion
+#  state_topic: "home/downstairs/family_room/motion"
+#  device_class: motion
+
+#- platform: bayesian
+#  name: Someone is Home
+#  prior: 0.85
+#  probability_threshold: 0.95
+#  observations:
+#    - entity_id: 'input_boolean.motion_detected'
+#      prob_given_true: 0.5
+#      prob_given_false: 0.2
+#      platform: 'state'
+#      to_state: 'on'
+#    - entity_id: 'device_tracker.sethsphone'
+#      prob_given_true: 0.50
+#      prob_given_false: 0.05
+#      platform: 'state'
+#      to_state: 'home'
+#    - entity_id: 'device_tracker.7ac50169'
+#      prob_given_true: 0.50
+#      prob_given_false: 0.05
+#      platform: 'state'
+#      to_state: 'home'
+#    - entity_id: 'device_tracker.christysphone'
+#      prob_given_true: 0.95
+#      prob_given_false: 0.05
+#      platform: 'state'
+#      to_state: 'home'
+#    - entity_id: 'device_tracker.lgd801c8e9841a'
+#      prob_given_true: 0.50
+#      prob_given_false: 0.05
+#      platform: 'state'
+#      to_state: 'home'
 
 # Door Sensors
 - platform: mqtt
   name: Garage Door
   state_topic: "home/downstairs/garage/door"
-  sensor_class: opening
+  device_class: garage_door
   payload_on: "OPEN"
   payload_off: "CLOSED"
  
 - platform: mqtt
   name: Inside Garage Door
   state_topic: "home/downstairs/garage/inside_door"
-  sensor_class: opening
+  device_class: door
   payload_on: "OPEN"
   payload_off: "CLOSED"
 

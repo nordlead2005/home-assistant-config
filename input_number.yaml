@@ -1,0 +1,7 @@
+travel_time_map_zoom:
+  name: Zoom Map
+  icon: mdi:magnify
+  initial: 4
+  min: 1
+  max: 12
+  step: 1

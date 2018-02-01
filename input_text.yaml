@@ -1,0 +1,2 @@
+gcm_key:
+  initial: !secret gcm_key

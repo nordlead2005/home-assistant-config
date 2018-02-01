@@ -1,45 +1,41 @@
-timed_front_porch:
-  alias: "Turn on front porch and set timer"
+harmony_watch_pc:
+  alias: Start the Watch PC harmony activity and start the PC
   sequence:
-    - service: script.turn_off
+    - service: remote.turn_on
+      entity_id: remote.familyroom
       data:
-        entity_id: script.front_porch_timer
+        activity: "Watch PC"
+    - delay: 00:00:02
     - service: switch.turn_on
-      data:
-        entity_id: switch.front_porch
-    - service: script.turn_on
-      data:
-        entity_id: script.front_porch_timer
-front_porch_timer:
-  alias: "Turn off front porch after 7 minute"
-  sequence:
-    - delay:
-        minutes: 7
-    - service: switch.turn_off
-      data:
-        entity_id: switch.front_porch
+      entity_id: switch.htpc
 
-light_timer:
-  alias: "Turn on a light and set a timer for it"
+harmony_power_off:
+  alias: Power off the TV and components
   sequence:
-    - service: script.turn_off
-      data:
-        entity_id: script.timed_light
-    - service: homeassistant.turn_on
-      data_template:
-        entity_id: "{{entity}}"
-    - service: script.timed_light
-      data_template:
-        time: "{{time}}"
-        entity: "{{entity}}"
+  - service: remote.turn_on
+    entity_id: remote.familyroom
+    data:
+      activity: "PowerOff"
+  - service: switch.turn_off
+    entity_id: switch.htpc
 
-timed_light:
-  alias: "Set a timer and then turn off a light if expired"
+harmony_volume_up:
+  alias: Turn the Volume Up
   sequence:
-  - delay: "{{time}}"
-  - service: homeassistant.turn_off
-    data_template:
-      entity_id: "{{entity}}"
+  - service: remote.send_command
+    data:
+      entity_id: remote.familyroom
+      device: 25493294
+      command: "VolumeUp"
+
+harmony_volume_down:
+  alias: Turn the Volume Down
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.familyroom
+      device: 25493294
+      command: "VolumeDown"
 
 ecobee_set_away_mode:
   alias: Set away mode on the ecobee
@@ -58,8 +54,10 @@ ecobee_clear_away_mode:
 ecobee_resume_program:
   alias: Resume Program
   sequence:
-  - service: ifttt.trigger
-    data: {"event":"HA_ResumeEcobee", "value1":"NA"}
+  - service: climate.ecobee_resume_program
+    data:
+      entity_id: climate.bigbee
+      resume_all: true
 
 ###############################################################################
 ########################     FIX HARMONY ACTIVITY     #########################
@@ -147,6 +145,25 @@ turn_off_all:
     - service: switch.turn_off
       entity_id: switch.wemo_switch_2
     - service: switch.turn_off
+      entity_id: switch.dining_room
+    - service: switch.turn_off
       entity_id: switch.front_porch
     - service: switch.turn_off
+      entity_id: switch.garage
+    - service: switch.turn_off
+      entity_id: switch.kitchen
+    - service: switch.turn_off
       entity_id: switch.kitchen_table
+    - service: switch.turn_off
+      entity_id: switch.living_room_fireplace
+    - service: switch.turn_off
+      entity_id: switch.back_porch_fan
+    - service: switch.turn_off
+      entity_id: switch.extension_1
+    - service: scene.turn_on
+      entity_id: scene.kitchen_motion
+    - service: scene.turn_on
+      entity_id: scene.dining_room_motion
+    - service: scene.turn_on
+      entity_id: scene.living_room_motion
+

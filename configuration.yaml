@@ -12,26 +12,35 @@ homeassistant:
   time_zone: America/New_York
   
   customize: !include customize.yaml
+  whitelist_external_dirs:
+    - '/home/hass/.homeassistant/www'
   
 logger:
   default: warning
-  logs:
-    homeassistant.components.switch.mqtt: debug
-    homeassistant.components.hub.mqtt: debug
-    homeassistant.components.mqtt: debug
+#  logs:
+#    homeassistant.components.switch.mqtt: debug
+#    homeassistant.components.hub.mqtt: debug
+#    homeassistant.components.mqtt: debug
 
 # Show links to resources in log and frontend
 #introduction:
 
+config:
+
 # Enables the frontend
 frontend:
+  javascript_version: es5
+  themes: !include themes.yaml
 
-http:
+#http:
   # Uncomment this to add a password (recommended!)
 #  api_password: !secret http_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
 #  base_url: !secret http_url
+#  cors_allowed_origins:
+#    - https://google.com
+#  use_x_forwarded_for: True
 #  ssl_certificate: !secret certificate
 #  ssl_key: !secret key
   #ip_ban_enabled: True
@@ -46,7 +55,7 @@ updater:
 #discovery:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
+#conversation:
 
 # Enables support for tracking state changes over time.
 history:
@@ -54,36 +63,54 @@ history:
     domains:
     - automation
     - group
+    - camera
+    - input_text
+    - scene
 
 # View all events in a logbook
-logbook:
-  exclude:
-    entities:
-    - binary_sensor.kitchen_table_motion
-    - automation.kitchen_table_motion
-    - script.light_timer
-    - script.timed_light
+#logbook:
 
 recorder:
-  purge_days: 7
+  purge_interval: 1
+  purge_keep_days: 2
   exclude:
     domains:
-    - automation
+      - camera
+      - group
+      - scene
     entities:
-    - script.light_timer
-    - script.timed_light
+      - binary_sensor.kitchen_motion
+      - binary_sensor.kitchen_table_motion
+      - binary_sensor.living_room_motion
+      - binary_sensor.dining_room_motion
+      - input_text.gcm_key
+      - sensor.center_travel_time_map_on
 
 device_tracker:
   - platform: ddwrt
     host: 192.168.125.1
     username: !secret ddwrt_username
     password: !secret ddwrt_password
-    track_new_devices: false
+    track_new_devices: true
+    hide_if_away: true
   - platform: ddwrt
-    host: 192.168.125.4
+    host: 192.168.125.3
     username: !secret ddwrt_username
     password: !secret ddwrt_password
-    track_new_devices: false
+    track_new_devices: true
+    hide_if_away: true
+  - platform: actiontec
+    host: 192.168.3.1
+    username: !secret actiontec_username
+    password: !secret actiontec_password
+    track_new_devices: true
+    hide_if_away: true
+  - platform: gpslogger
+#  - platform: ddwrt
+#    host: 192.168.125.4
+#    username: !secret ddwrt_username
+#    password: !secret ddwrt_password
+#    track_new_devices: false
     
 
 # Track the sun
@@ -101,69 +128,97 @@ wemo:
     - 192.168.125.20 #Plug-in Switch 1
     - 192.168.125.21 #Plug-in Switch 2
     - 192.168.125.22 #Front Porch
-    - 192.168.125.23 #Kitchen Table
+    - 192.168.125.23 #Dining Room
 
 remote:
   - platform: harmony
     name: FamilyRoom
     host: 192.168.125.130
 
-media_player:
-  - platform: cast
+#media_player:
+#  - platform: cast
     
-ifttt:
-  key: !secret ifttt_key
+#ifttt:
+#  key: !secret ifttt_key
+
+emulated_hue:
+  type: alexa
+  expose_by_default: true
+  exposed_domains:
+  - switch
+
 
 # Text to speech
-tts:
-  platform: google
+#tts:
+#  platform: google
 
 binary_sensor: !include binary_sensor.yaml
+camera: !include camera.yaml
 cover: !include cover.yaml
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
+input_number: !include input_number.yaml
 input_select: !include input_select.yaml
-input_slider: !include input_slider.yaml
+#input_slider: !include input_slider.yaml
+#input_datetime: !include input_datetime.yaml
+input_text: !include input_text.yaml
 notify: !include notify.yaml
 sensor: !include sensor.yaml
 switch: !include switches.yaml
 shell_command: !include shell_command.yaml
 
-automation: !include automation.yaml
-#scene: !include scenes.yaml
+automation: !include automations.yaml
+scene: !include scenes.yaml
 script: !include script.yaml
+alexa:
+intent_script: !include alexa.yaml
 
-#zone:
-#  name: home
-#  latitude: !secret home_latitude
-#  longitude: !secret home_longitude
-#  radius: 100
-#  icon: mdi:home-variant
+map:
+zone:
+  name: home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  radius: 100
+  icon: mdi:home-variant
 #
-#zone 2:
-#  name: work
-#  latitude: !secret work_latitude
-#  longitude: !secret work_longitude
-#  radius: 500
-#  icon: mdi:factory
+zone 2:
+  name: work
+  latitude: !secret work_latitude
+  longitude: !secret work_longitude
+  radius: 500
+  icon: mdi:factory
 #
-#zone 3:
-#  name: church
-#  latitude: !secret church_latitude
-#  longitude: !secret church_longitude
-#  radius: 200
-#  icon: mdi:church
+zone 3:
+  name: church
+  latitude: !secret church_latitude
+  longitude: !secret church_longitude
+  radius: 200
+  icon: mdi:church
 #
-#zone 4:
-#  name: parentsHouse
-#  latitude: !secret parents_latitude
-#  longitude: !secret parents_longitude
-#  radius: 200
-#  icon: mdi:home
+zone 4:
+  name: parentsHouse
+  latitude: !secret parents_latitude
+  longitude: !secret parents_longitude
+  radius: 200
+  icon: mdi:home
 #
-#zone 5:
-#  name: inLawsHouse
-#  latitude: !secret inlaws_latitude
-#  longitude: !secret inlaws_longitude
-#  radius: 200
-#  icon: mdi:home
+zone 5:
+  name: inLawsHouse
+  latitude: !secret inlaws_latitude
+  longitude: !secret inlaws_longitude
+  radius: 200
+  icon: mdi:home
+
+zone 6:
+  name: northwestYMCA
+  latitude: !secret northwestYMCA_latitude
+  longitude: !secret northwestYMCA_longitude
+  radius: 200
+  icon: mdi:weight
+
+zone 7:
+  name: wegmans
+  latitude: !secret wegmans_latitude
+  longitude: !secret wegmans_longitude
+  radius: 150
+  icon: mdi:cart

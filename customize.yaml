@@ -1,16 +1,16 @@
-automation.timer:
-  friendly_name: Enable
-  icon: mdi:clock
-sensor.timer_time_on:
-  friendly_name: Time On
-  icon: mdi:clock
-sensor.timer_time_off:
-  friendly_name: Time Off
-  icon: mdi:clock
+#automation.timer_1_start:
+#  friendly_name: Enable
+#  icon: mdi:clock
+
+binary_sensor.someone_is_home:
+  icon: mdi:home
 
 climate.bigbee:
   friendly_name: Ecobee
   entity_picture: /local/ecobee.png
+
+cover.family_room_shades:
+  icon: mdi:blinds
 
 device_tracker.sethsphone:
   icon: mdi:cellphone-android
@@ -18,6 +18,14 @@ device_tracker.sethsphone:
 device_tracker.christysphone:
   icon: mdi:cellphone-android
   friendly_name: "Christy"
+
+device_tracker.7ac50169:
+  icon: mdi:map-marker
+  friendly_name: "Seth's GPS"
+device_tracker.lgd801c8e9841a:
+  icon: mdi:map-marker
+  friendly_name: "Christy's GPS"
+
 
 group.all_automations:
   hidden: false
@@ -29,27 +37,31 @@ group.all_scripts:
   hidden: false
 group.all_switches:
   hidden: false
+group.sensors:
+  entity_picture: /local/sensor.png
 
-input_select.harmony_activity:
-  entity_picture: /local/harmony.png
+#input_select.harmony_activity:
+#  entity_picture: /local/harmony.png
 
-script.front_porch_timer:
-  icon: mdi:timer
 script.fix_harmony:
   icon: mdi:help
+#script.kitchen_table_timer:
+#  icon: mdi:timer
+#script.front_porch_timer:
+#  icon: mdi:timer
 
 sensor.dark_sky_temperature:
   friendly_name: 'Outside Temperature'
 sensor.dark_sky_wind_speed:
   friendly_name: "Wind Speed"
-sensor.indoor_temperature:
-  icon: mdi:thermometer
+#sensor.indoor_temperature:
+#  icon: mdi:thermometer
 sensor.tomorrows_forecast:
   icon: mdi:thermometer
 sensor.family_room:
   friendly_name: 'Harmony Activity'
-sensor.house_occupancy:
-  icon: mdi:home-variant
+#sensor.house_occupancy:
+#  icon: mdi:home-variant
 sensor.ups_battery:
   friendly_name: "UPS Battery"
   icon: mdi:battery
@@ -59,18 +71,47 @@ switch.ecobee_away_mode:
   friendly_name: "Away Mode"
 switch.htpc:
   icon: mdi:desktop-tower
+  emulated_hue_hidden: true
 switch.desktop:
   icon: mdi:desktop-tower
+  emulated_hue_hidden: true
 switch.front_porch:
   icon: mdi:lightbulb
+switch.garage:
+  icon: mdi:lightbulb
+  emulated_hue_name: "Garage Lights"
+switch.kitchen:
+  icon: mdi:lightbulb
+  emulated_hue_name: "Kitchen Lights"
 switch.kitchen_table:
   icon: mdi:lightbulb
+  emulate_hue_name: "Kitchen Table Lights"
+switch.kitchen_sink:
+  icon: mdi:lightbulb
+  emulate_hue_name: "Kitchen Sink Lights"
+switch.dining_room:
+  icon: mdi:lightbulb
+  emulated_hue_name: "Dining Room Lights"
 
 switch.wemo_switch_1:
   icon: mdi:lightbulb
   friendly_name: Front Light
-#  icon: mdi:pine-tree
-#  friendly_name: Christmas Tree
+  emulated_hue_name: "Family Room Light"
 switch.wemo_switch_2:
   icon: mdi:lightbulb
   friendly_name: Piano Light
+  emulated_hue_name: "Piano Light"
+
+switch.living_room_fireplace:
+  icon: mdi:lightbulb
+switch.back_porch_fan:
+  icon: mdi:fan
+switch.pool_pump:
+  icon: mdi:pool
+
+switch.extension_1:
+  icon: mdi:power-plug
+  emulated_hue_name: "Extension 1"
+switch.extension_2:
+  icon: mdi:power-plug
+  emulated_hue_name: "Extension 2"
