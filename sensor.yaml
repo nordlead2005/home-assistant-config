@@ -1,12 +1,12 @@
-﻿#- platform: darksky
-#  api_key: !secret darksky_key
-#  forecast:
-#  - 1
-#  monitored_conditions:
-#  - temperature
-#  - wind_speed
-#  - temperature_max
-#  - temperature_min
+﻿- platform: darksky
+  api_key: !secret darksky_key
+  forecast:
+  - 1
+  monitored_conditions:
+  - temperature
+  - wind_speed
+  - temperature_max
+  - temperature_min
 
 - platform: command_line
   name: UPS Battery
@@ -70,43 +70,30 @@
 #        There is a {{(float(probability)*100)|round(0)}}% chance Seth is at {{location}}. Last seen at {{as_timestamp(time)|timestamp_local}}
     
     family_room:
-#      entity_id:
-#      - remote.familyroom
       value_template: >
         {{ states.remote.familyroom.attributes.current_activity if states.remote.familyroom != none else "PowerOff" }}
 
-#    indoor_temperature:
-#      friendly_name: Indoor Temperature
-#      entity_id:
-#      - climate.bigbee
-#      unit_of_measurement: 'F'
-#      value_template: >-
-#        {{ states.climate.bigbee.attributes.current_temperature if states.climate.bigbee != none else NA}}
+    indoor_temperature:
+      friendly_name: Indoor Temperature
+      unit_of_measurement: 'F'
+      value_template: >-
+        {{ states.climate.bigbee.attributes.current_temperature if states.climate.bigbee != none else NA}}
         
-#    tomorrows_forecast:
-#      friendly_name: Tomorrow
-#      entity_id:
-#      - sensor.dark_sky_daily_high_temperature_1
-#      - sensor.dark_sky_daily_low_temperaure_1
-#      value_template: >-
-#        {% if states.sensor.dark_sky_daily_low_temperature_1 != none %}
-#          {{states.sensor.dark_sky_daily_low_temperature_1.state}} - {{states.sensor.dark_sky_daily_high_temperature_1.state}} {{states.sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}
-#        {% else %}
-#          NA
-#        {% endif %}
+    tomorrows_forecast:
+      friendly_name: Tomorrow
+      value_template: >-
+        {% if states.sensor.dark_sky_daily_low_temperature_1 != none %}
+          {{states.sensor.dark_sky_daily_low_temperature_1.state}} - {{states.sensor.dark_sky_daily_high_temperature_1.state}} {{states.sensor.dark_sky_daily_high_temperature_1.attributes.unit_of_measurement}}
+        {% else %}
+          NA
+        {% endif %}
 
     christmas_tree_water_level_text:
-#      entity_id:
-#      - sensor.christmas_tree_water_level
       value_template: >
         {%-set level = states.sensor.christmas_tree_water_level.state | float -%}
         {{ "critical" if level < 10 else "low" if level < 100 else "full" if level > 550 else states.sensor.christmas_tree_water_level_text.state }}
 
     center_travel_time_map_on:
-#      entity_id:
-#        - device_tracker.7ac80169
-#        - device_tracker.lgd801c8e9841a
-#        - input_select.center_travel_time_map_on
       value_template: >-
         {% set center = states.input_select.center_travel_time_map_on.state %}
         {% if center == "Christy"%}
@@ -120,7 +107,6 @@
 
       
 
-# added in 0.57, which is buggy like 0.60
 - platform: deluge
   host: 127.0.0.1
   username: !secret deluge_user

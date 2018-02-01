@@ -19,7 +19,6 @@ default_view:
   - group.dining_room
   - group.outside
   - updater.updater
-#  - group.timer
 
 Location:
   view: yes
@@ -29,8 +28,6 @@ Location:
     - group.map_control
     - group.notification_control
     - group.family
-#    - group.seth_location
-#    - group.christy_location
 
 Sensors:
   view: yes
@@ -115,9 +112,9 @@ Climate:
   icon: mdi:thermometer
   control: hidden
   entities:
-#  - sensor.dark_sky_temperature
-#  - sensor.dark_sky_wind_speed
-#  - sensor.tomorrows_forecast
+  - sensor.dark_sky_temperature
+  - sensor.dark_sky_wind_speed
+  - sensor.tomorrows_forecast
   - switch.ecobee_away_mode
   - climate.bigbee
   - script.ecobee_resume_program
