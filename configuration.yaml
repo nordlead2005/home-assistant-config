@@ -29,7 +29,6 @@ config:
 
 # Enables the frontend
 frontend:
-  javascript_version: es5
   themes: !include themes.yaml
 
 #http:
@@ -115,7 +114,7 @@ device_tracker:
     
 
 # Track the sun
-sun:
+#sun:
 
 ecobee:
   api_key: !secret ecobee_key
@@ -175,51 +174,5 @@ alexa:
 intent_script: !include alexa.yaml
 
 map:
-zone:
-  name: home
-  latitude: !secret home_latitude
-  longitude: !secret home_longitude
-  radius: 100
-  icon: mdi:home-variant
-#
-zone 2:
-  name: work
-  latitude: !secret work_latitude
-  longitude: !secret work_longitude
-  radius: 500
-  icon: mdi:factory
-#
-zone 3:
-  name: church
-  latitude: !secret church_latitude
-  longitude: !secret church_longitude
-  radius: 200
-  icon: mdi:church
-#
-zone 4:
-  name: parentsHouse
-  latitude: !secret parents_latitude
-  longitude: !secret parents_longitude
-  radius: 200
-  icon: mdi:home
-#
-zone 5:
-  name: inLawsHouse
-  latitude: !secret inlaws_latitude
-  longitude: !secret inlaws_longitude
-  radius: 200
-  icon: mdi:home
+zone: !include zones.yaml
 
-zone 6:
-  name: northwestYMCA
-  latitude: !secret northwestYMCA_latitude
-  longitude: !secret northwestYMCA_longitude
-  radius: 200
-  icon: mdi:weight
-
-zone 7:
-  name: wegmans
-  latitude: !secret wegmans_latitude
-  longitude: !secret wegmans_longitude
-  radius: 150
-  icon: mdi:cart

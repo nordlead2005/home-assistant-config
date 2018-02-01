@@ -1,0 +1,41 @@
+- name: home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  radius: 100
+  icon: mdi:home-variant
+
+- name: work
+  latitude: !secret work_latitude
+  longitude: !secret work_longitude
+  radius: 500
+  icon: mdi:factory
+
+- name: church
+  latitude: !secret church_latitude
+  longitude: !secret church_longitude
+  radius: 200
+  icon: mdi:church
+
+- name: parentsHouse
+  latitude: !secret parents_latitude
+  longitude: !secret parents_longitude
+  radius: 200
+  icon: mdi:home
+
+- name: inLawsHouse
+  latitude: !secret inlaws_latitude
+  longitude: !secret inlaws_longitude
+  radius: 200
+  icon: mdi:home
+
+- name: northwestYMCA
+  latitude: !secret northwestYMCA_latitude
+  longitude: !secret northwestYMCA_longitude
+  radius: 200
+  icon: mdi:weight
+
+- name: wegmans
+  latitude: !secret wegmans_latitude
+  longitude: !secret wegmans_longitude
+  radius: 150
+  icon: mdi:cart
