@@ -143,6 +143,7 @@ Family Room:
   - switch.wemo_switch_1
   - light.tv_bias_light
   - cover.family_room_shades
+  - binary_sensor.yamaha_receiver
   - switch.htpc
   - script.fix_harmony
 

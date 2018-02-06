@@ -66,3 +66,9 @@
   payload_on: "OPEN"
   payload_off: "CLOSED"
 
+- platform: mqtt
+  name: Yamaha Receiver
+  state_topic: "home/esp8266Receiver/availability"
+  device_class: power
+  payload_on: "online"
+  payload_off: "offline"

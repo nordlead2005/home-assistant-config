@@ -4,6 +4,8 @@
 
 binary_sensor.someone_is_home:
   icon: mdi:home
+binary_sensor.yamaha_receiver:
+  icon: mdi:amplifier
 
 climate.bigbee:
   friendly_name: Ecobee
