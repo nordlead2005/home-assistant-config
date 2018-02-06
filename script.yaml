@@ -1,21 +1,3 @@
-script_test:
-  alias: Test if calls are blocking
-  sequence:
-    - service: homeassistant.turn_on
-      entity_id: script.test1
-    - service: homeassistant.turn_on
-      entity_id: script.test2
-
-test1:
-  sequence:
-    - delay: 00:00:10
-
-test2:
-  sequence:
-    - delay: 00:00:20
-
-
-
 harmony_watch_pc:
   alias: Start the Watch PC harmony activity and start the PC
   sequence:
