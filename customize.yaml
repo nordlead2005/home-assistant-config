@@ -75,6 +75,9 @@ switch.htpc:
 switch.desktop:
   icon: mdi:desktop-tower
   emulated_hue_hidden: true
+
+switch.basement:
+  icon: mdi:lightbulb
 switch.front_porch:
   icon: mdi:lightbulb
 switch.garage:

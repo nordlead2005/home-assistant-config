@@ -17,6 +17,8 @@ homeassistant:
   
 logger:
   default: warning
+  logs:
+    homeassistant.components.sensor.google_travel_time: debug
 #  logs:
 #    homeassistant.components.switch.mqtt: debug
 #    homeassistant.components.hub.mqtt: debug
@@ -162,6 +164,7 @@ input_select: !include input_select.yaml
 #input_slider: !include input_slider.yaml
 #input_datetime: !include input_datetime.yaml
 input_text: !include input_text.yaml
+light: !include light.yaml
 notify: !include notify.yaml
 sensor: !include sensor.yaml
 switch: !include switches.yaml

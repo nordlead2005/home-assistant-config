@@ -17,6 +17,7 @@ default_view:
   - group.garage
   - group.living_room
   - group.dining_room
+  - group.basement
   - group.outside
   - updater.updater
 
@@ -140,6 +141,7 @@ Family Room:
   control: hidden
   entities:
   - switch.wemo_switch_1
+  - light.tv_bias_light
   - cover.family_room_shades
   - switch.htpc
   - script.fix_harmony
@@ -166,6 +168,12 @@ Living Room:
   - switch.wemo_switch_2
   - switch.living_room_fireplace
   - input_select.living_room_motion
+
+Basement:
+  view: no
+  control: hidden
+  entities:
+  - switch.basement
 
 Outside:
   view: no

@@ -1,0 +1,7 @@
+- platform: mqtt_json
+  name: TV Bias Light
+  state_topic: "home/downstairs/family_room/tv_bias_light"
+  command_topic: "home/downstairs/family_room/tv_bias_light/set"
+  rgb: true
+  white_value: true
+

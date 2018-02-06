@@ -28,6 +28,11 @@
         entity_id: script.ecobee_clear_away_mode
 
 - platform: mqtt
+  name: Basement
+  command_topic: "home/basement/front/lights/set"
+  state_topic: "home/basement/front/lights"
+  availability_topic: "home/esp8266BasementLights/availability"
+- platform: mqtt
   name: Garage
   command_topic: "home/downstairs/garage/lights/set"
   state_topic: "home/downstairs/garage/lights"
