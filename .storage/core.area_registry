@@ -1,0 +1,12 @@
+{
+    "data": {
+        "areas": [
+            {
+                "id": "9b3d98aea8b44bc1ab62c2a8a8d22276",
+                "name": "Family Room"
+            }
+        ]
+    },
+    "key": "core.area_registry",
+    "version": 1
+}

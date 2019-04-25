@@ -10,6 +10,54 @@
   host: 192.168.125.91
   turn_off:
     service: shell_command.shutdown_htpc
+- platform: rest
+  name: mosquitto
+  resource: http://localhost:8126/container/mosquitto
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
+- platform: rest
+  name: grafana
+  resource: http://localhost:8126/container/grafana
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
+- platform: rest
+  name: influxDb
+  resource: http://localhost:8126/container/influxDb
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
+- platform: rest
+  name: find
+  resource: http://localhost:8126/container/find
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
+- platform: rest
+  name: pi_hole
+  resource: http://localhost:8126/container/pi-hole
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
+- platform: rest
+  name: portainer
+  resource: http://localhost:8126/container/portainer
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
+- platform: rest
+  name: ha_dockermon
+  resource: http://localhost:8126/container/ha-dockermon
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
+- platform: rest
+  name: ghost
+  resource: http://localhost:8126/container/ghost
+  body_on: '{"state":"start"}'
+  body_off: '{"state":"stop"}'
+  is_on_template: '{{value_json is not none and value_json.state == "running"}}'
 - platform: template
   switches:
     ecobee_away_mode:
@@ -26,6 +74,57 @@
       turn_off:
         service: script.turn_on
         entity_id: script.ecobee_clear_away_mode
+    
+    tcl_master_bedroom:
+      value_template: >-
+        {{ is_state('media_player.master_bedroom_tv', 'playing') }}
+
+      turn_on:
+        service: media_player.turn_on
+        entity_id: media_player.master_bedroom_tv
+      turn_off:
+        service: shell_command.master_bedroom_tv_off
+    
+    tcl_family_room:
+      value_template: >-
+        {{ is_state('media_player.65_tcl_roku_tv', 'playing') }}
+
+      turn_on:
+        service: media_player.turn_on
+        entity_id: media_player.65_tcl_roku_tv
+      turn_off:
+        service: shell_command.family_room_tv_off
+
+    kitchen_lights_lock_on:
+      value_template: >-
+        {{ is_state('input_select.kitchen_motion', 'on') }}
+
+      turn_on:
+        service: input_select.select_option
+        entity_id: input_select.kitchen_motion
+        data:
+          option: 'on'
+      turn_off:
+        service: input_select.select_option
+        entity_id: input_select.kitchen_motion
+        data:
+         option: 'motion'
+
+    vacuum:
+      value_template: >-
+        {{ true }}
+      turn_on:
+        service: remote.send_command
+        entity_id: "remote.familyroom"
+        data:
+          device: 60463993
+          command: "Start"
+      turn_off:
+        service: remote.send_command
+        entity_id: "remote.familyroom"
+        data:
+          device: 60463993
+          command: "Home"
 
 - platform: mqtt
   name: Basement
@@ -46,6 +145,11 @@
   command_topic: "home/downstairs/kitchen/sink/lights/set"
   state_topic: "home/downstairs/kitchen/sink/lights"
 - platform: mqtt
+  name: Kitchen Sink Outlet
+  command_topic: "home/downstairs/kitchen/sink/outlet/set"
+  state_topic: "home/downstairs/kitchen/sink/outlet"
+
+- platform: mqtt
   name: Kitchen Table
   command_topic: "home/downstairs/kitchen/table/lights/set"
   state_topic: "home/downstairs/kitchen/table/lights"
@@ -64,6 +168,17 @@
   name: Pool Pump
   command_topic: "home/outside/pool/pump/set"
   state_topic: "home/outside/pool/pump"
+  availability_topic: "home/esp8266Pool/availability"
+ 
+- platform: mqtt
+  name: "Master Bedroom Fan Light"
+  command_topic: "cmnd/master_bedroom/fan/power"
+  state_topic: "stat/master_bedroom/fan/POWER1"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: true
+  optimistic: false
 
 - platform: mqtt
   name: "Extension 1"

@@ -24,7 +24,7 @@ device_tracker.christysphone:
 device_tracker.7ac50169:
   icon: mdi:map-marker
   friendly_name: "Seth's GPS"
-device_tracker.lgd801c8e9841a:
+device_tracker.lgus9978cc74d43:
   icon: mdi:map-marker
   friendly_name: "Christy's GPS"
 
@@ -68,6 +68,25 @@ sensor.ups_battery:
   friendly_name: "UPS Battery"
   icon: mdi:battery
 
+sensor.router_1_wan_in:
+  friendly_name: "WAN In"
+  icon: mdi:wan
+sensor.router_1_wan_out:
+  friendly_name: "WAN Out"
+  icon: mdi:wan
+sensor.router_1_lan_in:
+  friendly_name: "Router 1 LAN In"
+  icon: mdi:lan
+sensor.router_1_lan_out:
+  friendly_name: "Router 1 LAN Out"
+  icon: mdi:lan
+sensor.router_2_lan_in:
+  friendly_name: "Router 2 LAN In"
+  icon: mdi:lan
+sensor.router_2_lan_out:
+  friendly_name: "Router 2 LAN Out"
+  icon: mdi:lan
+
 switch.ecobee_away_mode:
   icon: mdi:run
   friendly_name: "Away Mode"
@@ -94,18 +113,24 @@ switch.kitchen_table:
 switch.kitchen_sink:
   icon: mdi:lightbulb
   emulate_hue_name: "Kitchen Sink Lights"
+switch.kitchen_sink_outlet:
+  icon: mdi:power-socket-us
 switch.dining_room:
   icon: mdi:lightbulb
   emulated_hue_name: "Dining Room Lights"
 
 switch.wemo_switch_1:
   icon: mdi:lightbulb
-  friendly_name: Front Light
-  emulated_hue_name: "Family Room Light"
+  friendly_name: "Wemo Switch 1"
+  emulated_hue_name: "Wemo Switch 1"
 switch.wemo_switch_2:
   icon: mdi:lightbulb
   friendly_name: Piano Light
   emulated_hue_name: "Piano Light"
+switch.miniswitch1:
+  icon: mdi:lightbulb
+  friendly_name: Family Room Light
+  emulated_hue_name: "Family Room Light"
 
 switch.living_room_fireplace:
   icon: mdi:lightbulb
@@ -120,3 +145,26 @@ switch.extension_1:
 switch.extension_2:
   icon: mdi:power-plug
   emulated_hue_name: "Extension 2"
+
+switch.tcl_master_bedroom:
+  icon: mdi:television
+  emulated_hue_name: "Bedroom TV"
+switch.master_bedroom_fan_light:
+  icon: mdi:ceiling-light
+
+switch.find:
+  icon: mdi:docker
+switch.ghost:
+  icon: mdi:docker
+switch.grafana:
+  icon: mdi:docker
+switch.ha_dockermon:
+  icon: mdi:docker
+switch.influxDb:
+  icon: mdi:docker
+switch.mosquitto:
+  icon: mdi:docker
+switch.pi_hole:
+  icon: mdi:docker
+switch.portainer:
+  icon: mdi:docker

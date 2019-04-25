@@ -147,6 +147,8 @@ turn_off_all:
     - service: switch.turn_off
       entity_id: switch.dining_room
     - service: switch.turn_off
+      entity_id: switch.desktop
+    - service: switch.turn_off
       entity_id: switch.front_porch
     - service: switch.turn_off
       entity_id: switch.basement

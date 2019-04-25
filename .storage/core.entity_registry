@@ -1,0 +1,89 @@
+{
+    "data": {
+        "entities": [
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "switch.wemo_switch_1",
+                "name": null,
+                "platform": "wemo",
+                "unique_id": "221630K010056F"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "switch.dining_room",
+                "name": null,
+                "platform": "wemo",
+                "unique_id": "221639K1300D98"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "switch.front_porch",
+                "name": null,
+                "platform": "wemo",
+                "unique_id": "221639K1300BC6"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "switch.wemo_switch_2",
+                "name": null,
+                "platform": "wemo",
+                "unique_id": "221630K010056D"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "switch.miniswitch1",
+                "name": null,
+                "platform": "wemo",
+                "unique_id": "221833K01060FA"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "media_player.65_tcl_roku_tv",
+                "name": null,
+                "platform": "roku",
+                "unique_id": "YS00GW733594"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "media_player.master_bedroom_tv",
+                "name": null,
+                "platform": "roku",
+                "unique_id": "YK000D040913"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "remote.65_tcl_roku_tv",
+                "name": null,
+                "platform": "roku",
+                "unique_id": "YS00GW733594"
+            },
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "remote.master_bedroom_tv",
+                "name": null,
+                "platform": "roku",
+                "unique_id": "YK000D040913"
+            }
+        ]
+    },
+    "key": "core.entity_registry",
+    "version": 1
+}

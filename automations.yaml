@@ -1,4 +1,18 @@
 ########################################################
+################  SYSTEM STARTUP  ######################
+########################################################
+- id: system_startup_theme
+  alias: Set Theme on Startup
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - service: frontend.set_theme
+      data:
+        name: 'darkorange'
+
+
+########################################################
 ################ COMING AND GOING ######################
 ########################################################
 
@@ -131,6 +145,10 @@
     entity_id: switch.back_porch_fan
     to: "on"
     for: 01:00:00
+  - platform: state
+    entity_id: switch.basement
+    to: "on"
+    for: 01:00:00
   action:
   - service: notify.html5
     data:
@@ -142,6 +160,8 @@
       message: >
         {{trigger.to_state.attributes.friendly_name}} was left on.
       data:
+        badge: "https://hass.pinternet.us/local/lightbulb.png"
+        icon: "https://hass.pinternet.us/local/lightbulb.png"
         tag: >
           {{trigger.entity_id}}_left_on
         my_id: >

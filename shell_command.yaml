@@ -1,2 +1,6 @@
 shutdown_desktop: !secret shutdown_desktop
 shutdown_htpc: !secret shutdown_htpc
+reboot_router_1: ssh reboot@192.168.125.1
+reboot_router_2: ssh reboot@192.168.125.3
+master_bedroom_tv_off: curl -X POST 192.168.125.33:8060/keypress/PowerOff
+family_room_tv_off: curl -X POST 192.168.125.32:8060/keypress/PowerOff

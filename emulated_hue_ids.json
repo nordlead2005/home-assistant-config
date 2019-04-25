@@ -1,0 +1,14 @@
+{
+    "1": "switch.kitchen_table",
+    "10": "switch.back_porch_fan",
+    "11": "switch.front_porch",
+    "12": "switch.living_room_fireplace",
+    "2": "switch.extension_1",
+    "3": "switch.wemo_switch_2",
+    "4": "switch.extension_2",
+    "5": "switch.garage",
+    "6": "switch.dining_room",
+    "7": "switch.kitchen",
+    "8": "switch.wemo_switch_1",
+    "9": "switch.ecobee_away_mode"
+}

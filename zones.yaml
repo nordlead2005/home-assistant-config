@@ -28,6 +28,12 @@
   radius: 200
   icon: mdi:home
 
+- name: davidsHouse
+  latitude: !secret davids_latitude
+  longitude: !secret davids_longitude
+  radius: 200
+  icon: mdi:home
+
 - name: northwestYMCA
   latitude: !secret northwestYMCA_latitude
   longitude: !secret northwestYMCA_longitude

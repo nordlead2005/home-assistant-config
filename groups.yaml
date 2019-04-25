@@ -7,7 +7,7 @@ default_view:
   entities:
 #  - binary_sensor.someone_is_home
   - device_tracker.7ac50169
-  - device_tracker.lgd801c8e9841a
+  - device_tracker.lgus9978cc74d43
   - sensor.guest_count
   - group.christmas
   - group.climate
@@ -18,6 +18,7 @@ default_view:
   - group.living_room
   - group.dining_room
   - group.basement
+  - group.master_bedroom
   - group.outside
   - updater.updater
 
@@ -39,6 +40,8 @@ Sensors:
   - group.water_level
   - group.cell_phones
   - group.pc_status
+  - group.router_status
+  - group.docker
 
 Settings:
   view: yes
@@ -78,16 +81,18 @@ Family:
   icon: mdi:account-multiple
   entities:
     - device_tracker.christysphone
-    - device_tracker.lgd801c8e9841a
+    - device_tracker.lgus9978cc74d43
+    - device_tracker.christy_internal
     - device_tracker.sethsphone
     - device_tracker.7ac50169
+    - device_tracker.seth_internal
 
 Christy Location:
   view: no
   icon: mdi:cellphone
   entities:
     - device_tracker.christysphone
-    - device_tracker.lgd801c8e9841a
+    - device_tracker.lgus9978cc74d43
     - input_select.christys_location
 
 Seth Location:
@@ -107,6 +112,7 @@ Christmas:
   entities:
   - switch.extension_1
   - switch.extension_2
+  - switch.wemo_switch_1
 
 Climate:
   view: no
@@ -134,15 +140,17 @@ Dining Room:
   - switch.dining_room
   - input_select.dining_room_motion
   - switch.desktop
+  - camera.delta_mini
 
 Family Room:
   view: no
   icon: mdi:television-guide
   control: hidden
   entities:
-  - switch.wemo_switch_1
+  - switch.miniswitch1
   - light.tv_bias_light
   - cover.family_room_shades
+  - media_player.65_tcl_roku_tv
   - binary_sensor.yamaha_receiver
   - switch.htpc
   - script.fix_harmony
@@ -159,7 +167,9 @@ Kitchen:
   entities:
   - switch.kitchen_table
   - switch.kitchen
+  - light.kitchen
   - switch.kitchen_sink
+  - switch.kitchen_sink_outlet
   - input_select.kitchen_motion
 
 Living Room:
@@ -182,6 +192,16 @@ Outside:
   - switch.front_porch
   - switch.back_porch_fan
   - switch.pool_pump
+  - input_boolean.pool_pump_timer_enabled
+  - sensor.pool_pump_off_time
+
+Master Bedroom:
+  view: no
+  control: hidden
+  entities:
+  - fan.master_bedroom_fan
+  - switch.master_bedroom_fan_light
+  - light.master_bedroom_bed_light
 
 ####################################
 ############# SENSORS ##############
@@ -215,12 +235,39 @@ PC Status:
   icon: mdi:server
   control: hidden
   entities:
-  - sensor.cpu_used
-  - sensor.ram_used
-  - sensor.swap_used
-  - sensor.disk_used_mntshare
-  - sensor.disk_used_mntbackup
-  - sensor.ups_battery
+  - sensor.processor_use
+  - sensor.memory_use_percent
+  - sensor.swap_use_percent
+  - sensor.disk_use_percent
+  - sensor.disk_use_percent_mntshare
+  - sensor.disk_use_percent_mntbackup
+#  - sensor.ups_battery
+
+Docker:
+  view: no
+  icon: mdi:docker
+  control: hidden
+  entities:
+    - switch.ha_dockermon
+    - switch.portainer
+    - switch.find
+    - switch.mosquitto
+    - switch.grafana
+    - switch.influxDb
+    - switch.ghost
+    - switch.pi_hole
+
+Router Status:
+  view: no
+  icon: mdi:router-wireless
+  control: hidden
+  entities:
+    - sensor.router_1_wan_in
+    - sensor.router_1_wan_out
+    - sensor.router_1_lan_in
+    - sensor.router_1_lan_out
+    - sensor.router_2_lan_in
+    - sensor.router_2_lan_out
 
 Water Level:
   view: no

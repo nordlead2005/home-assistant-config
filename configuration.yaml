@@ -13,7 +13,14 @@ homeassistant:
   
   customize: !include customize.yaml
   whitelist_external_dirs:
-    - '/home/hass/.homeassistant/www'
+    - '/config/www'
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.48.0/24
+        - 192.168.125.0/24
+      allow_bypass_login: true
+    - type: homeassistant
   
 logger:
   default: warning
@@ -32,22 +39,23 @@ config:
 frontend:
   themes: !include themes.yaml
 
-#http:
+http:
   # Uncomment this to add a password (recommended!)
 #  api_password: !secret http_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
-#  base_url: !secret http_url
+  base_url: !secret http_url
 #  cors_allowed_origins:
 #    - https://google.com
 #  use_x_forwarded_for: True
+#  trusted_proxies: 192.168.125.2
 #  ssl_certificate: !secret certificate
 #  ssl_key: !secret key
   #ip_ban_enabled: True
   #login_attempts_threshold: 5
 
 mqtt:
-  broker: localhost
+  broker: 192.168.125.2
 
 # Checks for available updates
 updater:
@@ -67,6 +75,34 @@ history:
     - camera
     - input_text
     - scene
+
+influxdb:
+  host: localhost
+  component_config_domain:
+    switch:
+      override_measurement: switch
+    light:
+      override_measurement: light
+  component_config_glob:
+    "binary_sensor.*_motion":
+      override_measurement: motion
+    "sensor.*water_level":
+      override_measurement: water_level
+  exclude:
+    domains:
+      - automation
+      - camera
+      - device_tracker
+      - group
+      - remote
+      - scene
+      - script
+      - updater
+      - weather
+    entities:
+      - sensor.deluge_status
+      - sensor.tomorrows_forecast
+
 
 # View all events in a logbook
 #logbook:
@@ -92,20 +128,23 @@ device_tracker:
     host: 192.168.125.1
     username: !secret ddwrt_username
     password: !secret ddwrt_password
-    track_new_devices: true
-    hide_if_away: true
+    new_device_defaults:
+      track_new_devices: true
+      hide_if_away: true
   - platform: ddwrt
     host: 192.168.125.3
     username: !secret ddwrt_username
     password: !secret ddwrt_password
-    track_new_devices: true
-    hide_if_away: true
+    new_device_defaults:
+      track_new_devices: true
+      hide_if_away: true
   - platform: actiontec
     host: 192.168.3.1
     username: !secret actiontec_username
     password: !secret actiontec_password
-    track_new_devices: true
-    hide_if_away: true
+    new_device_defaults:
+      track_new_devices: true
+      hide_if_away: true
   - platform: gpslogger
 #  - platform: ddwrt
 #    host: 192.168.125.4
@@ -130,14 +169,16 @@ wemo:
     - 192.168.125.21 #Plug-in Switch 2
     - 192.168.125.22 #Front Porch
     - 192.168.125.23 #Dining Room
+    - 192.168.125.24 #Plug-in Switch Mini 1
 
 remote:
   - platform: harmony
     name: FamilyRoom
     host: 192.168.125.30
 
-#media_player:
-#  - platform: cast
+roku:
+  - host: 192.168.125.32 #65" Family Room
+  - host: 192.168.125.33 #32" Master Bedroom
     
 #ifttt:
 #  key: !secret ifttt_key
@@ -147,6 +188,9 @@ emulated_hue:
   expose_by_default: true
   exposed_domains:
   - switch
+  - cover
+  - light
+  - fan
 
 
 # Text to speech
@@ -156,6 +200,7 @@ emulated_hue:
 binary_sensor: !include binary_sensor.yaml
 camera: !include camera.yaml
 cover: !include cover.yaml
+fan: !include fan.yaml
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_number: !include input_number.yaml

@@ -1,7 +1,30 @@
-- platform: mqtt_json
+- platform: mqtt
+  schema: json
   name: TV Bias Light
   state_topic: "home/downstairs/family_room/tv_bias_light"
   command_topic: "home/downstairs/family_room/tv_bias_light/set"
   rgb: true
   white_value: true
-
+- platform: mqtt
+  schema: json
+  name: Master Bedroom Bed Light
+  state_topic: "home/upstairs/master_bedroom/bed/light"
+  command_topic: "home/upstairs/master_bedroom/bed/light/set"
+  availability_topic: "home/esp8266BedLight/availability"
+  rgb: true
+  white_value: true
+- platform: mqtt
+  name: "Kitchen"
+  state_topic: "stat/kitchen/lights/POWER"
+  command_topic: "cmnd/kitchen/lights/POWER"
+  availability_topic: "tele/kitchen/lights/LWT"
+  brightness_state_topic: "stat/kitchen/lights/RESULT"
+  brightness_command_topic: "cmnd/kitchen/lights/Dimmer"
+  brightness_scale: 100
+  brightness_value_template: "{{ value_json.Dimmer }}"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false

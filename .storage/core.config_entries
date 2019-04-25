@@ -1,0 +1,30 @@
+{
+    "data": {
+        "entries": [
+            {
+                "connection_class": "local_push",
+                "data": {},
+                "domain": "mqtt",
+                "entry_id": "16db3c8429774eed8b4a937bb3967ce9",
+                "options": {},
+                "source": "import",
+                "title": "configuration.yaml",
+                "version": 1
+            },
+            {
+                "connection_class": "unknown",
+                "data": {
+                    "webhook_id": "014d545e27f2db4c0b581dff1fc2180e6c51d7bbbd5393f4a25109c0c1b5076c"
+                },
+                "domain": "gpslogger",
+                "entry_id": "f0007c50c0de478f9167f61ff47ac012",
+                "options": {},
+                "source": "user",
+                "title": "GPSLogger Webhook",
+                "version": 1
+            }
+        ]
+    },
+    "key": "core.config_entries",
+    "version": 1
+}

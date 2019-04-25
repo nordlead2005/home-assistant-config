@@ -15,6 +15,10 @@
   name: Living Room Motion
   state_topic: "home/downstairs/living_room/motion"
   device_class: motion
+- platform: mqtt
+  name: Kitchen Microwave Motion
+  state_topic: "home/downstairs/kitchen/microwave_motion"
+  device_class: motion
 #- platform: mqtt
 #  name: Family Room Motion
 #  state_topic: "home/downstairs/family_room/motion"
